@@ -1,44 +1,73 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ShiftRole from "./ShiftRole";
 
 const ShiftCard = ({ type, workers, roles }) => {
+  const [open, setOpen] = useState(false);
   const [rolesWorkers, setRolesWorkers] = useState(
     Array.from({ length: roles.length }, () => [])
   );
 
   return (
-    <div className="bg-white shadow-md rounded-2xl p-4 mb-4 border border-gray-200">
-      {type == 0 ? (
-        <div>
-          <h1 className="text-xl font-semibold text-blue-600 mb-2">
-            Morning Shift
-          </h1>
-        </div>
-      ) : (
-        <h1 className="text-xl font-semibold text-purple-600 mb-2">
-          Evening Shift
+    <div>
+      {/* Shift header */}
+      <div className="flex flex-row items-center mb-2">
+        <h1
+          className={`text-xl font-semibold m-2 ${
+            type === 0 ? "text-blue-600" : "text-purple-600"
+          }`}
+        >
+          {type === 0 ? "Morning Shift" : "Evening Shift"}
         </h1>
-      )}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-        {roles.map((role, index) => (
-          <ShiftRole
-            role={role}
-            workers={workers}
-            index={index}
-            setRolesWorkers={setRolesWorkers}
-            key={role.id}
-          />
-        ))}
+
+        <button
+          onClick={() => setOpen(!open)}
+          className="w-full sm:w-auto m-2 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+        >
+          {open ? "Close" : "Open"}
+        </button>
       </div>
 
-      <button
-        onClick={() => {
-          console.log(rolesWorkers);
-        }}
-        className="w-full sm:w-auto mt-4 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
-      >
-        save
-      </button>
+      {/* Closed state: empty */}
+      {!open ? null : (
+        // Full-screen modal overlay
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-start pt-20">
+          <div className="bg-white w-full max-w-6xl rounded-2xl shadow-lg p-6 mx-4 overflow-y-auto max-h-[80vh]">
+            {/* Modal header */}
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold">
+                {type === 0 ? "Morning Shift" : "Evening Shift"}
+              </h2>
+              <button
+                onClick={() => setOpen(false)}
+                className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+              >
+                Close
+              </button>
+            </div>
+
+            {/* Roles grid */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {roles.map((role, index) => (
+                <ShiftRole
+                  role={role}
+                  workers={workers}
+                  index={index}
+                  setRolesWorkers={setRolesWorkers}
+                  key={role.id}
+                />
+              ))}
+            </div>
+
+            {/* Save button */}
+            <button
+              onClick={() => console.log(rolesWorkers)}
+              className="mt-6 w-full sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

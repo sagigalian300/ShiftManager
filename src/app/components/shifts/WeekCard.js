@@ -1,55 +1,60 @@
 import React, { useEffect, useState } from "react";
 import Day from "./Day";
-
-const WeekCard = ({ workers, roles }) => {
+import { getDaysByWeekId } from "../../database/shifts";
+import Loader from "../Loader";
+const WeekCard = ({ workers, roles, week_id }) => {
+  const [open, setOpen] = useState(false);
   const [days, setDays] = useState([]);
-  const [daysNames, setDaysNames] = useState([
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setDays(getNextWeekSundayToSaturday());
-  }, []);
-
-  const getNextWeekSundayToSaturday = () => {
-    const days = [];
-
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // Sunday = 0, Monday = 1, ...
-
-    // How many days until next Sunday?
-    const daysUntilSunday = (7 - dayOfWeek) % 7 || 7;
-
-    // Get next Sunday
-    const nextSunday = new Date();
-    nextSunday.setDate(today.getDate() + daysUntilSunday);
-
-    // Push next Sunday + the full week (Sun → Sat)
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(nextSunday);
-      date.setDate(nextSunday.getDate() + i);
-
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      const year = date.getFullYear();
-
-      days.push(`${day}/${month}/${year}`);
+    // get days of week from DB
+    if (open) {
+      setLoading(true);
+      getDaysByWeekId(week_id).then((fetchedDays) => {
+        setDays(fetchedDays.days);
+        setLoading(false);
+      });
+      console.log("fetching days for week_id:", week_id);
     }
-
-    return days;
-  };
+  }, [open]);
 
   return (
     <div>
-      {days.map((date, index) => (
-        <Day key={index} date={date} dayName={daysNames[index]} workers={workers} roles={roles} />
-      ))}
+      {open ? (
+        <div>
+          <div className="flex flex-row overflow-x-scroll gap-2 p-1 m-1">
+            {days.map((day, index) => (
+              <Day
+                key={index}
+                date={day.date}
+                dayName={day.name}
+                workers={workers}
+                roles={roles}
+              />
+            ))}
+            <div className="flex justify-center items-center w-full">{loading && <Loader />}</div>
+          </div>
+          <button
+            className="mt-4 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            Close
+          </button>
+        </div>
+      ) : (
+        <div
+          onClick={() => setOpen(true)}
+          className="bg-white rounded-2xl shadow-lg p-6 mb-6 cursor-pointer 
+             border border-gray-200 hover:shadow-xl transition-all"
+        >
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+            Week Overview
+          </h2>
+        </div>
+      )}
     </div>
   );
 };
