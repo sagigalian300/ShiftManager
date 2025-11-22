@@ -1,11 +1,43 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import ShiftRole from "./ShiftRole";
+import {
+  addShiftAssignments,
+  getShiftsAssignments,
+} from "../../database/shifts";
+import Loader from "../Loader";
 
-const ShiftCard = ({ type, workers, roles }) => {
+const ShiftCard = ({ id, type, workers, roles }) => {
   const [open, setOpen] = useState(false);
   const [rolesWorkers, setRolesWorkers] = useState(
     Array.from({ length: roles.length }, () => [])
   );
+  const [unSelectedWorkers, setUnSelectedWorkers] = useState(workers);
+  const [shiftAssignments, setShiftAssignments] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setLoading(true);
+      getShiftsAssignments(id).then((res) => {
+        setShiftAssignments(res.shift_assignments);
+        setLoading(false);
+      });
+    }
+  }, [open]);
+
+  const handleSaveShift = () => {
+    setLoading(true);
+    const shift_data = { shift_id: id, shift_assignments: rolesWorkers };
+    // console.log(shift_data);
+    addShiftAssignments(shift_data)
+      .then((res) => {
+        setLoading(false);
+        alert("Data saved successfully");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -20,12 +52,16 @@ const ShiftCard = ({ type, workers, roles }) => {
         </h1>
 
         <button
-          onClick={() => setOpen(!open)}
+          onClick={() => {
+            setOpen(!open);
+          }}
           className="w-full sm:w-auto m-2 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
         >
           {open ? "Close" : "Open"}
         </button>
       </div>
+
+      <h1>Shift with id = {id}</h1>
 
       {/* Closed state: empty */}
       {!open ? null : (
@@ -38,13 +74,17 @@ const ShiftCard = ({ type, workers, roles }) => {
                 {type === 0 ? "Morning Shift" : "Evening Shift"}
               </h2>
               <button
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setUnSelectedWorkers(workers);
+
+                  setOpen(false);
+                }}
                 className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
               >
                 Close
               </button>
             </div>
-
+                {loading && <Loader />}
             {/* Roles grid */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {roles.map((role, index) => (
@@ -53,6 +93,9 @@ const ShiftCard = ({ type, workers, roles }) => {
                   workers={workers}
                   index={index}
                   setRolesWorkers={setRolesWorkers}
+                  setUnSelectedWorkers={setUnSelectedWorkers}
+                  unSelectedWorkers={unSelectedWorkers}
+                  shiftAssignments={shiftAssignments}
                   key={role.id}
                 />
               ))}
@@ -60,7 +103,7 @@ const ShiftCard = ({ type, workers, roles }) => {
 
             {/* Save button */}
             <button
-              onClick={() => console.log(rolesWorkers)}
+              onClick={handleSaveShift}
               className="mt-6 w-full sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
             >
               Save

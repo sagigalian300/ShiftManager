@@ -26,6 +26,7 @@ const WeekCard = ({ workers, roles, week_id }) => {
           <div className="flex flex-row overflow-x-scroll gap-2 p-1 m-1">
             {days.map((day, index) => (
               <Day
+                id={day.id}
                 key={index}
                 date={day.date}
                 dayName={day.name}

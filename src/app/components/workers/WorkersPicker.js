@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-const WorkersPicker = ({ workers, selectedWorkers, setSelectedWorkers }) => {
- 
+const WorkersPicker = ({
+  roleId,
+  workers,
+  selectedWorkers,
+  setSelectedWorkers,
+  unSelectedWorkers,
+  setUnSelectedWorkers,
+}) => {
   const handleSelect = (e) => {
     const selectedWorkerId = Number(e.target.value);
     const workerObj = workers.find((w) => w.id === selectedWorkerId);
+    workerObj["choosenRole"] = roleId;
+
+    setUnSelectedWorkers((prev) =>
+      prev.filter((w) => w.id !== selectedWorkerId)
+    );
 
     if (workerObj && !selectedWorkers.some((w) => w.id === workerObj.id)) {
       setSelectedWorkers([...selectedWorkers, workerObj]);
@@ -15,6 +26,8 @@ const WorkersPicker = ({ workers, selectedWorkers, setSelectedWorkers }) => {
 
   const handleRemove = (idToRemove) => {
     setSelectedWorkers(selectedWorkers.filter((w) => w.id !== idToRemove));
+    const workerObj = workers.find((w) => Number(w.id) === Number(idToRemove));
+    setUnSelectedWorkers((prev) => [...prev, workerObj]);
   };
 
   return (
@@ -30,7 +43,7 @@ const WorkersPicker = ({ workers, selectedWorkers, setSelectedWorkers }) => {
         <option value="" disabled>
           Select a worker
         </option>
-        {workers.map((worker) => (
+        {unSelectedWorkers.map((worker) => (
           <option key={worker.id} value={worker.id}>
             {worker.first_name} {worker.last_name}
           </option>
