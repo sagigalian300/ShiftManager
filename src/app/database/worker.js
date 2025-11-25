@@ -30,3 +30,28 @@ export async function getAllWorkers() {
     console.log("Error fetching workers");
   }
 }
+
+export async function updateWorkerDetails(
+  id,
+  first_name,
+  last_name,
+  email,
+  phone,
+  salary,
+  roles
+) {
+  try {
+    const response = await api.post("/worker/updateWorkerDetails", {
+      worker_id: id,
+      first_name,
+      last_name,
+      email,
+      phone,
+      salary,
+      roles,
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error updating worker details");
+  }
+}

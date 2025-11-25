@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getAllRoles } from "../../database/role";
 
-const AddWorker = ({ handleAddWorker, newWorker, setNewWorker }) => {
-  const [roles, setRoles] = useState([]);
+const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
+  // const [roles, setRoles] = useState([]);
 
-  useEffect(() => {
-    getAllRoles().then((fetchedRoles) => setRoles(fetchedRoles));
-  }, []);
+  // useEffect(() => {
+  //   getAllRoles().then((fetchedRoles) => setRoles(fetchedRoles));
+  // }, []);
 
   // Add role from select box
   const handleRoleSelect = (e) => {

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react"; // icons for mobile toggle
+import { logoutUser } from "../database/users";
 
 const Navbar = ({ setMode }) => {
   const [open, setOpen] = useState(false);
@@ -39,6 +40,11 @@ const Navbar = ({ setMode }) => {
           <button
             className="w-full text-left px-4 py-2 rounded-xl transition-all duration-300 
                        hover:bg-white/20 hover:translate-x-1 active:scale-95 font-medium"
+            onClick={() => {
+              logoutUser().then((res) => {
+                console.log(res);
+              });
+            }}
           >
             Logout
           </button>

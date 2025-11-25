@@ -5,13 +5,18 @@ import AddWorker from "./AddWorker";
 import WorkerCard from "./WorkerCard";
 import { addWorker, getAllWorkers } from "../../database/worker";
 import Loader from "../Loader";
+import { getAllRoles } from "../../database/role";
+
 export default function Workers() {
   const [showForm, setShowForm] = useState(false);
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [avgSalary, setAvgSalary] = useState(0);
+  const [roles, setRoles] = useState([]);
 
   useEffect(() => {
+    getAllRoles().then((fetchedRoles) => setRoles(fetchedRoles));
+
     getAllWorkers()
       .then((fetchedWorkers) => {
         console.log(workers);
@@ -104,6 +109,7 @@ export default function Workers() {
       {/* ADD NEW WORKER FORM */}
       {showForm && (
         <AddWorker
+          roles={roles}
           handleAddWorker={handleAddWorker}
           newWorker={newWorker}
           setNewWorker={setNewWorker}
@@ -114,7 +120,7 @@ export default function Workers() {
       {/* WORKERS LIST AS CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {workers.map((worker, index) => (
-          <WorkerCard key={index} worker={worker} />
+          <WorkerCard key={index} worker={worker} setWorkers={setWorkers} roles={roles} />
         ))}
       </div>
     </div>
