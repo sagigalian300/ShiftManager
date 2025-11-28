@@ -1,45 +1,58 @@
 // middleware.js
 import { NextResponse } from 'next/server';
-// 🚫 Remove: import axios from 'axios'; 
 
-const PROTECTED_ROUTES = ['/dashboard']; // must be authenticated to get into them.
+const PROTECTED_ROUTES = ['/dashboard']; // boss routes
+const WORKER_PROTECTED_ROUTES = ['/WorkerShiftAssignments']; // worker routes
 const LOGIN_URL = '/login';
-// ⚠️ Ensure this URL is correct:
+const WORKER_LOGIN_URL = '/workersLogin';
 const BACKEND_STATUS_URL = 'http://localhost:3001/status'; 
+const BACKEND_WORKER_STATUS_URL = 'http://localhost:3001/worker-status';
 
 export async function middleware(request) {
     const { pathname } = request.nextUrl;
-    if (PROTECTED_ROUTES.some(route => pathname.startsWith(route))) {
-        
-        const cookieHeader = request.headers.get('cookie') || '';
+    const cookieHeader = request.headers.get('cookie') || '';
 
+    // Check if route is a boss protected route
+    if (PROTECTED_ROUTES.some(route => pathname.startsWith(route))) {
         try {
-            // ✅ Use the native 'fetch' API instead of Axios
             const authStatusResponse = await fetch(BACKEND_STATUS_URL, {
                 method: 'GET',
-                // 2. Crucial: Forward the HTTP-only cookie
                 headers: {
                     'Cookie': cookieHeader,
                 },
             });
 
-            // 3. Manually check for a successful status (200-299)
             if (authStatusResponse.ok) {
-                // Status is 200: User is authenticated.
                 return NextResponse.next(); 
             }
-            
-            // If status is NOT 2xx (e.g., 401), execution falls to the catch block logically
-            // or the subsequent redirect code if you prefer to handle it outside catch.
-
         } catch (error) {
-            // This catch block primarily handles network errors (e.g., backend is down)
             console.error("Backend connection error:", error);
         }
 
-        // Redirect unauthenticated/unreachable user to login
         const url = request.nextUrl.clone();
         url.pathname = LOGIN_URL;
+        return NextResponse.redirect(url);
+    }
+
+    // Check if route is a worker protected route
+    if (WORKER_PROTECTED_ROUTES.some(route => pathname.startsWith(route))) {
+        try {
+            const authStatusResponse = await fetch(BACKEND_WORKER_STATUS_URL, {
+                method: 'GET',
+                headers: {
+                    'Cookie': cookieHeader,
+                },
+            });
+
+            if (authStatusResponse.ok) {
+                return NextResponse.next(); 
+            }
+        } catch (error) {
+            console.error("Worker backend connection error:", error);
+        }
+
+        const url = request.nextUrl.clone();
+        url.pathname = WORKER_LOGIN_URL;
         return NextResponse.redirect(url);
     }
 
@@ -47,5 +60,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: ['/dashboard/:path*'],
+    matcher: ['/dashboard/:path*', '/WorkerShiftAssignments/:path*'],
 };

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import EditWorker from "./EditWorker";
 import { updateWorkerDetails } from "../../database/worker";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
-const WorkerCard = ({ index, worker, setWorkers, roles }) => {
+const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
   const [editing, setEditing] = useState(false);
 
   const updateWorker = (updatedWorker) => {
@@ -13,6 +14,8 @@ const WorkerCard = ({ index, worker, setWorkers, roles }) => {
       email,
       phone,
       salary,
+      password,
+      rank,
       updatedRoles,
     } = updatedWorker;
 
@@ -25,6 +28,8 @@ const WorkerCard = ({ index, worker, setWorkers, roles }) => {
       existingWorker.email !== email ||
       existingWorker.phone !== phone ||
       existingWorker.salary !== salary ||
+      existingWorker.password !== password ||
+      existingWorker.rank !== rank ||
       JSON.stringify(existingWorker.roles.map((r) => r.id).sort()) !==
         JSON.stringify(updatedRoles.map((r) => r.id).sort());
 
@@ -43,6 +48,8 @@ const WorkerCard = ({ index, worker, setWorkers, roles }) => {
               email,
               phone,
               salary,
+              password,
+              rank,
               roles: updatedRoles,
             }
           : w
@@ -55,7 +62,9 @@ const WorkerCard = ({ index, worker, setWorkers, roles }) => {
       email,
       phone,
       salary,
-      updatedRoles
+      updatedRoles,
+      password,
+      rank
     )
       .then((res) => {
         console.log("DB updated", res);
@@ -85,6 +94,8 @@ const WorkerCard = ({ index, worker, setWorkers, roles }) => {
         <h2 className="text-xl font-semibold text-gray-800">
           {worker.first_name} {worker.last_name}
         </h2>
+        <p className="text-gray-600 text-sm mt-1">⭐ {worker.rank}</p>
+        <p className="text-gray-600 text-sm mt-1">🔒 {worker.password}</p>
         <p className="text-gray-600 text-sm mt-1">📞 {worker.phone}</p>
         <p className="text-gray-700 font-medium mt-1">
           💰 Salary per hour:{" "}
@@ -110,13 +121,31 @@ const WorkerCard = ({ index, worker, setWorkers, roles }) => {
       </div>
 
       <br />
-      <button
-        className="mt-auto px-6 py-2 rounded-full bg-purple-600 text-white 
-             hover:bg-purple-700 transition-all font-medium shadow-md"
-        onClick={() => setEditing(true)}
-      >
-        Edit
-      </button>
+      <div className="flex flex-row space-x-4">
+        {/* Edit Button: Purple outline for primary action */}
+        <button
+          onClick={() => setEditing(true)}
+          className="flex items-center space-x-1 px-4 py-1.5 text-sm rounded-full 
+               text-purple-600 border border-purple-600 
+               hover:bg-purple-600 hover:text-white transition-all font-medium"
+        >
+          <FaEdit size={14} />
+          <span>Edit</span>
+        </button>
+
+        {/* Delete Button: Red text/outline for destructive action */}
+        <button
+          onClick={() => {
+            deleteWorker(worker.id);
+          }}
+          className="flex items-center space-x-1 px-4 py-1.5 text-sm rounded-full 
+               text-red-500 border border-red-500 
+               hover:bg-red-500 hover:text-white transition-all font-medium"
+        >
+          <FaTrash size={14} />
+          <span>Delete</span>
+        </button>
+      </div>
     </div>
   );
 };

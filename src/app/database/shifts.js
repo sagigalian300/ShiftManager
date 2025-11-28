@@ -95,3 +95,21 @@ export async function getShiftsAssignments(shift_id) {
     );
   }
 }
+
+export async function getEncryptedBossAndWeek(week_id) {
+  try {
+    const response = await api.get(
+      `shift/getEncryptedBossAndWeek/${week_id}`
+    );
+    return response.data;
+  } catch (error) { 
+    console.error(
+      "Fetching encrypted boss and week failed:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching encrypted boss and week failed due to an unknown error."
+    );
+  }
+}

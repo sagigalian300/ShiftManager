@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
-  // const [roles, setRoles] = useState([]);
-
-  // useEffect(() => {
-  //   getAllRoles().then((fetchedRoles) => setRoles(fetchedRoles));
-  // }, []);
-
   // Add role from select box
   const handleRoleSelect = (e) => {
     const selectedRoleId = Number(e.target.value);
@@ -39,6 +33,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
       className="bg-white shadow-lg rounded-2xl p-6 mb-6 space-y-4 transition-all"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Row 1: Name Fields */}
         <input
           type="text"
           placeholder="First Name"
@@ -53,6 +48,8 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
           value={newWorker.last_name}
           onChange={handleChange("last_name")}
         />
+
+        {/* Row 2: Contact Fields */}
         <input
           type="email"
           placeholder="Email"
@@ -67,6 +64,38 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
           value={newWorker.phone}
           onChange={handleChange("phone")}
         />
+
+        {/* NEW FIELD: Password */}
+        <input
+          required
+          type="password"
+          placeholder="Password"
+          className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          value={newWorker.password || ""} // Use || "" to handle undefined state gracefully
+          onChange={handleChange("password")}
+        />
+
+        {/* NEW FIELD: Rank */}
+        <input
+          required
+          type="number"
+          placeholder="Rank"
+          className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          value={newWorker.rank || ""} // Use || "" to handle undefined state gracefully
+          onChange={handleChange("rank")}
+        />
+        
+        {/* Row 3 (Cont.): Salary Field */}
+        <input
+          required
+          type="number"
+          placeholder="Salary per hour (₪)"
+          className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          value={newWorker.salary}
+          onChange={handleChange("salary")}
+        />
+
+        {/* Row 3 (Cont.): Role Select */}
         <select
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           onChange={handleRoleSelect}
@@ -81,14 +110,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
             </option>
           ))}
         </select>
-        <input
-          required
-          type="number"
-          placeholder="Salary per hour (₪)"
-          className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          value={newWorker.salary}
-          onChange={handleChange("salary")}
-        />
+
       </div>
 
       {/* Chosen roles display */}

@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Day from "./Day";
-import { getDaysByWeekId } from "../../database/shifts";
+import {
+  getDaysByWeekId,
+  getEncryptedBossAndWeek,
+} from "../../database/shifts";
 import Loader from "../Loader";
+import { selfDomain } from "../../selfDomain";
+
 const WeekCard = ({ workers, roles, week_id }) => {
   const [open, setOpen] = useState(false);
   const [days, setDays] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [encryptedBoss, setEncryptedBoss] = useState("");
+  const [encryptedWeek, setEncryptedWeek] = useState("");
 
   useEffect(() => {
-    // get days of week from DB
     if (open) {
       setLoading(true);
+
+      getEncryptedBossAndWeek(week_id)
+        .then((res) => {
+          setEncryptedBoss(res.encryptedBoss);
+          setEncryptedWeek(res.encryptedWeek);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+
       getDaysByWeekId(week_id).then((fetchedDays) => {
         setDays(fetchedDays.days);
         setLoading(false);
       });
-      console.log("fetching days for week_id:", week_id);
     }
   }, [open]);
 
@@ -34,7 +49,9 @@ const WeekCard = ({ workers, roles, week_id }) => {
                 roles={roles}
               />
             ))}
-            <div className="flex justify-center items-center w-full">{loading && <Loader />}</div>
+            <div className="flex justify-center items-center w-full">
+              {loading && <Loader />}
+            </div>
           </div>
           <button
             className="mt-4 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
@@ -44,16 +61,29 @@ const WeekCard = ({ workers, roles, week_id }) => {
           >
             Close
           </button>
+
+          <a
+            href={`${selfDomain}workersLogin?boss_id=${encryptedBoss}&week_id=${encryptedWeek}`}
+            target="_blank"
+          >
+            Click here to assign shifts
+          </a>
         </div>
       ) : (
         <div
-          onClick={() => setOpen(true)}
-          className="bg-white rounded-2xl shadow-lg p-6 mb-6 cursor-pointer 
+          className="flex flex-row justify-between items-center bg-white rounded-2xl shadow-lg p-6 mb-6
              border border-gray-200 hover:shadow-xl transition-all"
         >
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+          <h2 className="text-2xl font-semibold text-gray-800">
             Week Overview
           </h2>
+
+          <button
+            onClick={() => setOpen(true)}
+            className="w-auto m-2 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+          >
+            Open
+          </button>
         </div>
       )}
     </div>

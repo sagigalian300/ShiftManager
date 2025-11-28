@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import AddWorker from "./AddWorker";
 import WorkerCard from "./WorkerCard";
-import { addWorker, getAllWorkers } from "../../database/worker";
+import { addWorker, delWorker, getAllWorkers } from "../../database/worker";
 import Loader from "../Loader";
 import { getAllRoles } from "../../database/role";
 
@@ -13,6 +13,16 @@ export default function Workers() {
   const [loading, setLoading] = useState(true);
   const [avgSalary, setAvgSalary] = useState(0);
   const [roles, setRoles] = useState([]);
+  const [newWorker, setNewWorker] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    password: "",
+    rank: "",
+    roles: [],
+    salary: "",
+  });
 
   useEffect(() => {
     getAllRoles().then((fetchedRoles) => setRoles(fetchedRoles));
@@ -27,15 +37,6 @@ export default function Workers() {
       });
   }, []);
 
-  const [newWorker, setNewWorker] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    roles: [],
-    salary: "",
-  });
-
   const handleAddWorker = (e) => {
     e.preventDefault();
     if (newWorker.roles.length === 0) {
@@ -48,7 +49,9 @@ export default function Workers() {
       newWorker.email,
       newWorker.phone,
       newWorker.salary,
-      newWorker.roles
+      newWorker.roles,
+      newWorker.password,
+      newWorker.rank
     );
 
     setWorkers([...workers, newWorker]);
@@ -59,8 +62,28 @@ export default function Workers() {
       phone: "",
       roles: [],
       salary: "",
+      password: "",
+      rank: 0,
     });
     setShowForm(false);
+  };
+
+  const deleteWorker = (workerId) => {
+    // delete localy
+    setWorkers((prev) => prev.filter((worker) => worker.id != workerId));
+
+    // delete from DB
+    setLoading(true);
+    delWorker(workerId)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -120,7 +143,13 @@ export default function Workers() {
       {/* WORKERS LIST AS CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {workers.map((worker, index) => (
-          <WorkerCard key={index} worker={worker} setWorkers={setWorkers} roles={roles} />
+          <WorkerCard
+            key={index}
+            worker={worker}
+            setWorkers={setWorkers}
+            roles={roles}
+            deleteWorker={deleteWorker}
+          />
         ))}
       </div>
     </div>

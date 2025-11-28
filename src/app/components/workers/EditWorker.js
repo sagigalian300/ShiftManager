@@ -7,6 +7,12 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
   const [phone, setPhone] = useState(worker.phone);
   const [salary, setSalary] = useState(worker.salary);
 
+  // NEW: State for Password (blank, so user only enters if changing it)
+  const [password, setPassword] = useState("");
+  
+  // NEW: State for Rank
+  const [rank, setRank] = useState(worker.rank);
+
   // 1. Initialize with role objects (worker.roles already contains objects)
   const [selectedRoles, setSelectedRoles] = useState(worker.roles);
 
@@ -28,11 +34,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
   const saveChanges = () => {
     // 2. Check if at least one role is selected
     if (selectedRoles.length > 0) {
-      // 3. Pass the role objects to onSave, or map them back to IDs if your parent
-      // component/API expects IDs. I'm assuming you want to pass the objects based
-      // on the prompt, but included the ID mapping as an alternative for common use cases.
-      
-      // OPTION A: Pass the full role objects
+      // 3. Pass the role objects to onSave, including the new fields
       onSave({
         worker_id: worker.id,
         first_name: firstName,
@@ -40,7 +42,9 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
         email,
         phone,
         salary,
-        updatedRoles: selectedRoles, 
+        password, 
+        rank, 
+        updatedRoles: selectedRoles,
       });
 
       setEditing(false);
@@ -69,6 +73,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
 
           {/* Form fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            {/* Standard Fields (Name, Contact) */}
             <input
               type="text"
               className="border border-gray-300 rounded-xl p-3"
@@ -101,6 +106,25 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
               onChange={(e) => setPhone(e.target.value)}
             />
 
+            {/* NEW FIELD: Password */}
+            <input
+              type="password"
+              className="border border-gray-300 rounded-xl p-3"
+              placeholder="Change Password (leave blank if no change) 🔒💰"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            
+            {/* NEW FIELD: Rank */}
+            <input
+              type="number"
+              className="border border-gray-300 rounded-xl p-3"
+              placeholder="Rank 🥇💰"
+              value={rank}
+              onChange={(e) => setRank(Number(e.target.value))}
+            />
+
+            {/* Salary Field */}
             <input
               type="number"
               className="border border-gray-300 rounded-xl p-3"
