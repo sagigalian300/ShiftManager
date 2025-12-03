@@ -1,8 +1,9 @@
 import { api } from "./api";
 
-export async function getWeekToAssignTo(encrypted_week_id) {
+export async function getWeekToAssignTo() {
   try {
     const response = await api.get("/workerAssignments/getWeekToAssignTo");
+    console.log("Response data:", response.data);
     return response.data;
   } catch (error) {
     console.log("Error fetching week to assign to");

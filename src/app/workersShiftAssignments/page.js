@@ -48,6 +48,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [availability, setAvailability] = useState({}); // { [shiftId]: boolean }
   const [summary, setSummary] = useState(null);
+  const [workerName, setWorkerName] = useState("");
 
   useEffect(() => {
     let mounted = true;
@@ -56,6 +57,7 @@ const Page = () => {
       .then((res) => {
         if (!mounted) return;
         const payload = res?.data || res;
+        setWorkerName(res?.workerName || "");
         const receivedDays = payload?.days || [];
         setDays(receivedDays);
         setWeekStartDate(payload?.startDate || payload?.weekStartDate || "");
@@ -175,7 +177,22 @@ const Page = () => {
             </div>
           </div>
         </div>
-
+        <div className="m-5">
+          <h1 className="flex items-center gap-4 text-2xl md:text-3xl font-extrabold text-gray-900">
+            <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-purple-400 text-white text-lg shadow">
+              {workerName ? workerName.charAt(0).toUpperCase() : "W"}
+            </span>
+            <span>
+              Hello{" "}
+              <span className="text-purple-600">
+                {workerName || "Worker"}
+              </span>
+            </span>
+          </h1>
+          <p className="mt-1 text-sm text-gray-500">
+            Pick the shifts you're available for this week.
+          </p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {days.map((day) => (
             <article

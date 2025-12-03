@@ -18,8 +18,9 @@ const RoleCard = ({ role, onDelete }) => {
     .toUpperCase();
 
   return (
-    <div className="flex items-center justify-between gap-4 p-4 bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all">
-      <div className="flex items-start gap-4">
+    <div className="grid grid-cols-[minmax(0,1fr)_88px_auto] items-center gap-4 p-4 bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all">
+      {/* left: avatar + content */}
+      <div className="flex items-start gap-4 min-w-0">
         <div className="flex-shrink-0">
           <div className="w-14 h-14 rounded-lg bg-gradient-to-tr from-purple-600 to-purple-400 text-white flex items-center justify-center font-semibold text-lg shadow">
             {initials}
@@ -28,7 +29,9 @@ const RoleCard = ({ role, onDelete }) => {
 
         <div className="min-w-0">
           <h3 className="text-lg font-semibold text-gray-900 truncate">{role.name}</h3>
-          <p className="text-sm text-gray-600 mt-1 line-clamp-2">{role.desc}</p>
+          <p className="text-sm text-gray-600 mt-1 text-ellipsis overflow-hidden" style={{ WebkitLineClamp: 2, display: '-webkit-box', WebkitBoxOrient: 'vertical' }}>
+            {role.desc}
+          </p>
 
           {role.tags && role.tags.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
@@ -45,7 +48,14 @@ const RoleCard = ({ role, onDelete }) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-3">
+      {/* center: fixed-width stat column (always vertically centered) */}
+      <div className="w-20 flex-shrink-0 text-center flex flex-col items-center justify-center">
+        <div className="text-sm text-gray-500">Workers</div>
+        <div className="text-lg font-semibold text-gray-800">{role.numOfWorkers ?? 0}</div>
+      </div>
+
+      {/* right: actions */}
+      <div className="flex items-center justify-end gap-3">
         <button
           onClick={() => onDelete(role.id)}
           title="Delete role"
