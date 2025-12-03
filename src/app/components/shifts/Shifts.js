@@ -67,7 +67,7 @@ const Shifts = () => {
 
     const res = await addWeeklyShifts(newDays);
     const newWeekId = res.week_id;
-    setWeeks([...weeks, { week_id: newWeekId }]);
+    setWeeks([...weeks, { id: newWeekId }]);
     setLoading(false);
   };
 

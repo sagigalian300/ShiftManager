@@ -4,14 +4,16 @@ import React, { useState } from 'react';
 const RoleForm = ({ onSaveRole, onCancel }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [numOfWorkers, setNumOfWorkers] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.trim() === '') return; // Basic validation
     
-    onSaveRole({ name, description });
+    onSaveRole({ name, description, numOfWorkers });
     setName('');
     setDescription('');
+    setNumOfWorkers(0);
   };
 
   return (
@@ -32,7 +34,7 @@ const RoleForm = ({ onSaveRole, onCancel }) => {
             placeholder="e.g., Shift Manager, Barista"
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-4">
           <label htmlFor="roleDescription" className="block text-sm font-medium text-gray-700 mb-1">
             Description
           </label>
@@ -43,6 +45,21 @@ const RoleForm = ({ onSaveRole, onCancel }) => {
             rows="3"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
             placeholder="Briefly describe the responsibilities of this role."
+          />
+        </div>
+
+        <div className="mb-6">
+          <label htmlFor="numOfWorkers" className="block text-sm font-medium text-gray-700 mb-1">
+            Number of Workers
+          </label>
+          <input
+            type="number"
+            id="numOfWorkers"
+            value={numOfWorkers}
+            onChange={(e) => setNumOfWorkers(Number(e.target.value))}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
+            placeholder="Enter the number of workers needed for this role"
+            min="0"
           />
         </div>
 

@@ -24,8 +24,9 @@ const Roles = () => {
       id: Date.now(), // Simple unique ID
       name: newRoleData.name,
       desc: newRoleData.description,  
+      numOfWorkers: newRoleData.numOfWorkers,
     };
-    const result = await addRole(newRole.name, newRole.desc).catch(
+    const result = await addRole(newRole.name, newRole.desc, newRole.numOfWorkers).catch(
       (error) => {
         alert(error.message);
       }

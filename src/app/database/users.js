@@ -1,5 +1,15 @@
 import { api } from "./api";
 
+export async function registerUser(username, password) {
+  try {
+    const response = await api.post("user/register", { username, password });
+    console.log("Registration successful:", response.data);
+    return response;
+  } catch (error) {
+    console.error("Registration failed:", error.response ? error.response.data : error.message);
+  }
+}
+
 export async function loginUser(username, password) {
   try {
     const response = await api.post("user/login", { username, password });

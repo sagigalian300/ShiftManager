@@ -95,7 +95,7 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
           {worker.first_name} {worker.last_name}
         </h2>
         <p className="text-gray-600 text-sm mt-1">⭐ {worker.rank}</p>
-        <p className="text-gray-600 text-sm mt-1">🔒 {worker.password}</p>
+        {/* <p className="text-gray-600 text-sm mt-1">🔒 {worker.password}</p> */}
         <p className="text-gray-600 text-sm mt-1">📞 {worker.phone}</p>
         <p className="text-gray-700 font-medium mt-1">
           💰 Salary per hour:{" "}
@@ -125,22 +125,23 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
         {/* Edit Button: Purple outline for primary action */}
         <button
           onClick={() => setEditing(true)}
-          className="flex items-center space-x-1 px-4 py-1.5 text-sm rounded-full 
-               text-purple-600 border border-purple-600 
-               hover:bg-purple-600 hover:text-white transition-all font-medium"
+          className="flex items-center space-x-2 px-4 py-1.5 text-sm rounded-full 
+               bg-purple-600 text-white 
+               hover:bg-purple-700 transition-all font-medium shadow-sm"
         >
           <FaEdit size={14} />
           <span>Edit</span>
         </button>
+        
 
         {/* Delete Button: Red text/outline for destructive action */}
         <button
           onClick={() => {
             deleteWorker(worker.id);
           }}
-          className="flex items-center space-x-1 px-4 py-1.5 text-sm rounded-full 
-               text-red-500 border border-red-500 
-               hover:bg-red-500 hover:text-white transition-all font-medium"
+          className="flex items-center space-x-2 px-4 py-1.5 text-sm rounded-full 
+               bg-red-500 text-white 
+               hover:bg-red-600 transition-all font-medium shadow-sm"
         >
           <FaTrash size={14} />
           <span>Delete</span>

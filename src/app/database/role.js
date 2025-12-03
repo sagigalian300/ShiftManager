@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export async function addRole(name, desc) {
+export async function addRole(name, desc, numOfWorkers) {
   try {
-    const response = await api.post("role/addRole", { name, desc });
+    const response = await api.post("role/addRole", { name, desc, numOfWorkers });
 
     return response.data;
   } catch (error) {
