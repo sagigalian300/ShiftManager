@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Day from "./Day";
 import {
+  computeOptimalAssignment,
   getDaysByWeekId,
   getEncryptedBossAndWeek,
 } from "../../database/shifts";
 import Loader from "../Loader";
 import { selfDomain } from "../../selfDomain";
+import OptimalBuilderReport from "./OptimalBuilderReport";
 
 const IconCalendar = (props) => (
   <svg {...props} viewBox="0 0 24 24" fill="none" className="w-6 h-6">
@@ -53,6 +55,8 @@ const WeekCard = ({ workers, roles, week_id }) => {
   const [encryptedBoss, setEncryptedBoss] = useState("");
   const [encryptedWeek, setEncryptedWeek] = useState("");
   const [editingManually, setEditingManually] = useState(false);
+  const [statsForm, setStatsForm] = useState(false);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
     if (open) {
@@ -144,11 +148,23 @@ const WeekCard = ({ workers, roles, week_id }) => {
               type="button"
               className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-rose-500 to-orange-400 text-white text-sm font-medium shadow hover:from-rose-600 hover:to-orange-500 transition"
               title="Smart Creation"
+              onClick={() => {
+                setStatsForm(true);
+                setLoading(true);
+                computeOptimalAssignment(week_id).then((res) => {
+                  setStats(res.details.stats);
+                  setLoading(false);
+                });
+              }}
             >
               Smart Creation
             </button>
-          </div>
 
+            {loading && <Loader />}
+          </div>
+          {statsForm && (
+            <OptimalBuilderReport stats={stats} setStatsForm={setStatsForm} />
+          )}
           {editingManually && (
             <div className="border-t border-gray-100 pt-4">
               {loading ? (

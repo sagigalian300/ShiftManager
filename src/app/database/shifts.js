@@ -98,11 +98,9 @@ export async function getShiftsAssignments(shift_id) {
 
 export async function getEncryptedBossAndWeek(week_id) {
   try {
-    const response = await api.get(
-      `shift/getEncryptedBossAndWeek/${week_id}`
-    );
+    const response = await api.get(`shift/getEncryptedBossAndWeek/${week_id}`);
     return response.data;
-  } catch (error) { 
+  } catch (error) {
     console.error(
       "Fetching encrypted boss and week failed:",
       error.response ? error.response.data : error.message
@@ -110,6 +108,22 @@ export async function getEncryptedBossAndWeek(week_id) {
     throw new Error(
       error.response?.data?.message ||
         "Fetching encrypted boss and week failed due to an unknown error."
+    );
+  }
+}
+
+export async function computeOptimalAssignment(week_id) {
+  try {
+    const response = await api.get(`shift/smartWeeklyShiftsBuilder/${week_id}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Computing optimal assignment failed:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error(
+      error.response?.data?.message ||
+        "Computing optimal assignment failed due to an unknown error."
     );
   }
 }
