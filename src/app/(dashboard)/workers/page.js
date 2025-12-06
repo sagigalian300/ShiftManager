@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import AddWorker from "./AddWorker";
-import WorkerCard from "./WorkerCard";
-import { addWorker, delWorker, getAllWorkers } from "../../database/worker";
-import Loader from "../Loader";
-import { getAllRoles } from "../../database/role";
+import AddWorker from "../../../components/workers/AddWorker";
+import WorkerCard from "../../../components/workers/WorkerCard";
+import { addWorker, delWorker, getAllWorkers } from "../../../services/worker";
+import Loader from "../../../components/UI/Loader";
+import { getAllRoles } from "../../../services/role";
 
 export default function Workers() {
   const [showForm, setShowForm] = useState(false);

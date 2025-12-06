@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { loginUser } from "../database/users";
+import { loginUser } from "../../services/users";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ export default function LoginPage() {
       .then((data) => {
         console.log("Login successful:", data.success);
         if (data.success) {
-          router.push("/dashboard");
+          router.push("/workers");
         }
       })
       .catch((error) => {

@@ -2,16 +2,23 @@
 
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react"; // icons for mobile toggle
-import { logoutUser } from "../database/users";
+import { logoutUser } from "../../services/users";
+import { useRouter } from "next/navigation";
 
-const Navbar = ({ setMode }) => {
+const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const links = [
-    { name: "Shifts", mode: 0 },
-    { name: "Workers", mode: 1 },
-    { name: "Roles", mode: 2 },
+    { name: "Shifts", path: "/shifts" },
+    { name: "Workers", path: "/workers" },
+    { name: "Roles", path: "/roles" },
   ];
+
+  const handleNavigate = (path) => {
+    router.push(path);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -27,7 +34,7 @@ const Navbar = ({ setMode }) => {
                 key={index}
                 className="text-left px-4 py-2 rounded-xl transition-all duration-300 
                            hover:bg-white/20 hover:translate-x-1 active:scale-95 font-medium"
-                onClick={() => setMode(link.mode)}
+                onClick={() => handleNavigate(link.path)}
               >
                 {link.name}
               </button>
@@ -86,10 +93,7 @@ const Navbar = ({ setMode }) => {
                 key={index}
                 className="text-left px-4 py-2 rounded-xl transition-all duration-300 
                            hover:bg-white/20 active:scale-95 font-medium"
-                onClick={() => {
-                  setMode(link.mode);
-                  setOpen(false);
-                }}
+                onClick={() => handleNavigate(link.path)}
               >
                 {link.name}
               </button>
@@ -102,6 +106,11 @@ const Navbar = ({ setMode }) => {
           <button
             className="w-full text-left px-4 py-2 rounded-xl transition-all duration-300 
                        hover:bg-white/20 active:scale-95 font-medium"
+            onClick={() => {
+              logoutUser().then((res) => {
+                console.log(res);
+              });
+            }}
           >
             Logout
           </button>

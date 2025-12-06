@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllWorkers } from "../../database/worker";
-import { getAllRoles } from "../../database/role";
-import Loader from "../Loader";
-import WeekCard from "./WeekCard";
-import { addWeeklyShifts } from "../../database/shifts";
-import { getAllWeeks } from "../../database/shifts";
+import { getAllWorkers } from "../../../services/worker";
+import { getAllRoles } from "../../../services/role";
+import Loader from "../../../components/UI/Loader";
+import WeekCard from "../../../components/shifts/WeekCard";
+import { addWeeklyShifts } from "../../../services/shifts";
+import { getAllWeeks } from "../../../services/shifts";
 
 const Shifts = () => {
   const [weeks, setWeeks] = useState([]);

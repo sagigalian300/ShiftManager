@@ -6,35 +6,23 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
   const [email, setEmail] = useState(worker.email || "");
   const [phone, setPhone] = useState(worker.phone);
   const [salary, setSalary] = useState(worker.salary);
-
-  // NEW: State for Password (blank, so user only enters if changing it)
   const [password, setPassword] = useState("");
-  
-  // NEW: State for Rank
   const [rank, setRank] = useState(worker.rank);
-
-  // 1. Initialize with role objects (worker.roles already contains objects)
   const [selectedRoles, setSelectedRoles] = useState(worker.roles);
 
   const toggleRole = (roleToToggle) => {
     setSelectedRoles((prev) => {
-      // Check if the role ID is already selected
       const isSelected = prev.some((r) => r.id === roleToToggle.id);
-
       if (isSelected) {
-        // Remove the role object
         return prev.filter((r) => r.id !== roleToToggle.id);
       } else {
-        // Add the new role object
         return [...prev, roleToToggle];
       }
     });
   };
 
   const saveChanges = () => {
-    // 2. Check if at least one role is selected
     if (selectedRoles.length > 0) {
-      // 3. Pass the role objects to onSave, including the new fields
       onSave({
         worker_id: worker.id,
         first_name: firstName,
@@ -106,7 +94,6 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
               onChange={(e) => setPhone(e.target.value)}
             />
 
-            {/* NEW FIELD: Password */}
             <input
               type="password"
               className="border border-gray-300 rounded-xl p-3"
@@ -115,7 +102,6 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
             
-            {/* NEW FIELD: Rank */}
             <input
               type="number"
               className="border border-gray-300 rounded-xl p-3"

@@ -3,8 +3,8 @@ import ShiftRole from "./ShiftRole";
 import {
   addShiftAssignments,
   getShiftsAssignments,
-} from "../../database/shifts";
-import Loader from "../Loader";
+} from "../../services/shifts";
+import Loader from "../UI/Loader";
 
 const ShiftCard = ({ id, type, workers, roles }) => {
   const [open, setOpen] = useState(false);

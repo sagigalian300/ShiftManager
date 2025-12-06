@@ -1,7 +1,7 @@
 // middleware.js
 import { NextResponse } from "next/server";
 
-const PROTECTED_ROUTES = ["/dashboard"]; // boss routes
+const PROTECTED_ROUTES = ["/shifts", "/workers", "/roles"]; // boss routes
 const WORKER_PROTECTED_ROUTES = ["/workersShiftAssignments"]; // worker routes
 const LOGIN_URL = "/login";
 const WORKER_LOGIN_URL = "/unauthorized";
@@ -62,5 +62,11 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/workersShiftAssignments/:path*"],
+  // Add all the routes you defined in PROTECTED_ROUTES here
+  matcher: [
+    "/shifts/:path*",
+    "/workers/:path*",
+    "/roles/:path*",
+    "/workersShiftAssignments/:path*",
+  ],
 };

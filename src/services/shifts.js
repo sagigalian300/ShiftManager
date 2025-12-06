@@ -127,3 +127,19 @@ export async function computeOptimalAssignment(week_id) {
     );
   }
 }
+
+export async function getWeekDataForExcelDocument(week_id) {
+  try {
+    const response = await api.get(`shift/getWeekDataForExcelDocument/${week_id}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Fetching week data for Excel document failed:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching week data for Excel document failed due to an unknown error."
+    );
+  }
+}

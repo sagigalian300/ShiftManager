@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import {
   addWorkerSuggestedAssignment,
   getWeekToAssignTo,
-} from "../database/workersAssignments";
-import Loader from "../components/Loader";
-import ShiftSummerizer from "../components/workerShiftAssignments/ShiftSummerizer";
+} from "../../services/workersAssignments";
+import Loader from "../../components/UI/Loader";
+import ShiftSummerizer from "../../components/workerShiftAssignments/ShiftSummerizer";
 
 const SunIcon = (props) => (
   <svg
@@ -184,9 +184,7 @@ const Page = () => {
             </span>
             <span>
               Hello{" "}
-              <span className="text-purple-600">
-                {workerName || "Worker"}
-              </span>
+              <span className="text-purple-600">{workerName || "Worker"}</span>
             </span>
           </h1>
           <p className="mt-1 text-sm text-gray-500">

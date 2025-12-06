@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ShiftCard from "./ShiftCard";
-import { getShiftsByDayId } from "../../database/shifts";
-import Loader from "../Loader";
+import { getShiftsByDayId } from "../../services/shifts";
+import Loader from "../UI/Loader";
 
 const Day = ({ id, date, dayName, workers, roles }) => {
   const [shifts, setShifts] = useState([]);

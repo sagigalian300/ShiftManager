@@ -1,6 +1,6 @@
 import { useState } from "react";
 import EditWorker from "./EditWorker";
-import { updateWorkerDetails } from "../../database/worker";
+import { updateWorkerDetails } from "../../services/worker";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
 const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
@@ -28,11 +28,12 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
       existingWorker.email !== email ||
       existingWorker.phone !== phone ||
       existingWorker.salary !== salary ||
-      existingWorker.password !== password ||
       existingWorker.rank !== rank ||
+      password.length > 0 ||
       JSON.stringify(existingWorker.roles.map((r) => r.id).sort()) !==
         JSON.stringify(updatedRoles.map((r) => r.id).sort());
-
+    console.log(changed);
+    
     if (!changed) {
       console.log("No changes detected. Skipping update.");
       setEditing(false);
@@ -73,7 +74,8 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
       })
       .catch((err) => {
         console.log("Error updating worker:", err);
-      });
+      }); 
+      
   };
 
   return (
@@ -132,7 +134,6 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
           <FaEdit size={14} />
           <span>Edit</span>
         </button>
-        
 
         {/* Delete Button: Red text/outline for destructive action */}
         <button

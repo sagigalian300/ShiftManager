@@ -4,10 +4,12 @@ import {
   computeOptimalAssignment,
   getDaysByWeekId,
   getEncryptedBossAndWeek,
-} from "../../database/shifts";
-import Loader from "../Loader";
-import { selfDomain } from "../../selfDomain";
+  getWeekDataForExcelDocument,
+} from "../../services/shifts";
+import Loader from "../UI/Loader";
+import { selfDomain } from "../../utils/selfDomain";
 import OptimalBuilderReport from "./OptimalBuilderReport";
+import { downloadWeekAssignmentsExcel } from "../../utils/weekDataExcelDownloader";
 
 const IconCalendar = (props) => (
   <svg {...props} viewBox="0 0 24 24" fill="none" className="w-6 h-6">
@@ -120,10 +122,30 @@ const WeekCard = ({ workers, roles, week_id }) => {
           <div className="flex flex-wrap items-center gap-3 mt-3">
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 text-sm text-gray-700 shadow-sm hover:shadow-md transition"
-              title="View week"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-green-600 text-white text-sm font-medium shadow-sm hover:bg-green-700 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              title="Export to Excel"
+              onClick={() => {
+                getWeekDataForExcelDocument(week_id).then((data) => {
+                  // console.log(data.weekData);
+                  downloadWeekAssignmentsExcel(data.weekData);
+                });
+              }}
             >
-              View
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-.536 4.286a.75.75 0 011.072 0l3.75 3.75a.75.75 0 010 1.072l-3.75 3.75a.75.75 0 01-1.072-1.072l2.457-2.457H8.25a.75.75 0 010-1.5h5.657l-2.457-2.457a.75.75 0 010-1.072z"
+                  clipRule="evenodd"
+                  opacity="0"
+                />
+                <path d="M4.5 3.75a.75.75 0 00-1.5 0v16.5a.75.75 0 001.5 0v-16.5zM6.75 3a.75.75 0 00-.75.75v16.5c0 .414.336.75.75.75h9.75a.75.75 0 00.75-.75V8.25a.75.75 0 00-.22-.53l-4.5-4.5A.75.75 0 0012 3H6.75zM12.75 12a.75.75 0 00-1.5 0h-3a.75.75 0 000 1.5h3zm-1.5 3a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3zm-3 0a.75.75 0 000 1.5h.75a.75.75 0 000-1.5h-.75z" />
+              </svg>
+              Export to Excel
             </button>
 
             <a
@@ -132,7 +154,7 @@ const WeekCard = ({ workers, roles, week_id }) => {
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition"
             >
-              <IconLink className="text-white" /> Assign shifts
+              <IconLink className="text-white" /> Send Assignment Link
             </a>
 
             <button

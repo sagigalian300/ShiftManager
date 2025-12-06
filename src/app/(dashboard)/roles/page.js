@@ -1,10 +1,11 @@
 // roles.js
 "use client";
 import React, { useEffect, useState } from "react";
-import RolesList from "./RolesList";
-import RoleForm from "./RoleForm";
-import { addRole, getAllRoles, deleteRole } from "../../database/role";
-import Loader from "../Loader";
+import RolesList from "../../../components/roles/RolesList";
+import RoleForm from "../../../components/roles/RoleForm";
+import { addRole, getAllRoles, deleteRole } from "../../../services/role";
+import Loader from "../../../components/UI/Loader";
+
 const Roles = () => {
   const [roles, setRoles] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -23,14 +24,16 @@ const Roles = () => {
     const newRole = {
       id: Date.now(), // Simple unique ID
       name: newRoleData.name,
-      desc: newRoleData.description,  
+      desc: newRoleData.description,
       numOfWorkers: newRoleData.numOfWorkers,
     };
-    const result = await addRole(newRole.name, newRole.desc, newRole.numOfWorkers).catch(
-      (error) => {
-        alert(error.message);
-      }
-    );
+    const result = await addRole(
+      newRole.name,
+      newRole.desc,
+      newRole.numOfWorkers
+    ).catch((error) => {
+      alert(error.message);
+    });
     setRoles([...roles, newRole]);
     setShowForm(false); // Hide the form after adding
   };

@@ -1,6 +1,6 @@
 // api.js (or axiosConfig.js)
 import axios from "axios";
-import { urlConnector } from "./urlConnector";
+import { urlConnector } from "../utils/urlConnector";
 
 // --------------------------------------------------------
 // 1. AXIOS BASE CONFIGURATION
