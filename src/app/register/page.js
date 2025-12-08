@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerUser } from "../database/users";
+import { registerUser } from "../../services/users";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
