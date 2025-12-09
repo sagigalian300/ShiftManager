@@ -1,68 +1,82 @@
-// middleware.js
 import { NextResponse } from "next/server";
 
-const PROTECTED_ROUTES = ["/shifts", "/workers", "/roles"]; // boss routes
-const WORKER_PROTECTED_ROUTES = ["/workersShiftAssignments"]; // worker routes
+// 1. Define routes and their allowed roles
+const BOSS_ROUTES = ["/shifts", "/workers", "/roles"];
+const WORKER_ROUTES = ["/workersShiftAssignments"];
+
 const LOGIN_URL = "/login";
-const WORKER_LOGIN_URL = "/unauthorized";
-const BACKEND_STATUS_URL = "http://localhost:3001/status";
-const BACKEND_WORKER_STATUS_URL = "http://localhost:3001/worker-status";
+const UNAUTHORIZED_URL = "/unauthorized";
+const BACKEND_STATUS_URL = "http://localhost:3001/status"; // Single endpoint
 
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
   const cookieHeader = request.headers.get("cookie") || "";
 
-  // Check if route is a boss protected route
-  if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route))) {
-    try {
-      const authStatusResponse = await fetch(BACKEND_STATUS_URL, {
-        method: "GET",
-        headers: {
-          Cookie: cookieHeader,
-        },
-      });
+  // --- FIXED MATCHING LOGIC ---
+  // We check: Is it an exact match? OR Does it start with "route/"?
+  // This prevents "/workers" from matching "/workersShiftAssignments"
 
-      if (authStatusResponse.ok) {
-        return NextResponse.next();
-      }
-    } catch (error) {
-      console.error("Backend connection error:", error);
+  const isBossRoute = BOSS_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  const isWorkerRoute = WORKER_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  // 2. Perform ONE Unified Auth Check
+  try {
+    const res = await fetch(BACKEND_STATUS_URL, {
+      method: "GET",
+      headers: { Cookie: cookieHeader },
+    });
+
+    if (!res.ok) {
+      // Token is invalid/missing -> Go to Login
+      const url = request.nextUrl.clone();
+      url.pathname = LOGIN_URL;
+      return NextResponse.redirect(url);
     }
 
+    const userData = await res.json();
+    const userRoles = userData.roles || [];
+
+    // 3. Check Permissions
+    // Scenario A: User is trying to access Boss Routes
+    if (isBossRoute) {
+      const isBoss = userRoles.includes("boss") || userRoles.includes("admin");
+      if (!isBoss) {
+        // User is logged in (e.g. Worker) but NOT a boss -> Unauthorized
+        const url = request.nextUrl.clone();
+        url.pathname = UNAUTHORIZED_URL;
+        return NextResponse.redirect(url);
+      }
+    }
+
+    // Scenario B: User is trying to access Worker Routes
+    if (isWorkerRoute) {
+      const isWorker = userRoles.includes("worker");
+      // Optional: Do bosses also have access to worker views?
+      // If yes: const isAllowed = isWorker || userRoles.includes("boss");
+      if (!isWorker) {
+        const url = request.nextUrl.clone();
+        url.pathname = UNAUTHORIZED_URL;
+        return NextResponse.redirect(url);
+      }
+    }
+
+    // If we passed the checks, allow access
+    return NextResponse.next();
+  } catch (error) {
+    console.error("Auth check failed:", error);
+    // If backend is down, safer to redirect to login
     const url = request.nextUrl.clone();
     url.pathname = LOGIN_URL;
     return NextResponse.redirect(url);
   }
-
-  // Check if route is a worker protected route
-  if (WORKER_PROTECTED_ROUTES.some((route) => pathname.startsWith(route))) {
-    console.log("Checking worker auth status");
-
-    try {
-      const authStatusResponse = await fetch(BACKEND_WORKER_STATUS_URL, {
-        method: "GET",
-        headers: {
-          Cookie: cookieHeader,
-        },
-      });
-
-      if (authStatusResponse.ok) {
-        return NextResponse.next();
-      }
-    } catch (error) {
-      console.error("Worker backend connection error:", error);
-    }
-
-    const url = request.nextUrl.clone();
-    url.pathname = WORKER_LOGIN_URL;
-    return NextResponse.redirect(url);
-  }
-
-  return NextResponse.next();
 }
 
 export const config = {
-  // Add all the routes you defined in PROTECTED_ROUTES here
   matcher: [
     "/shifts/:path*",
     "/workers/:path*",

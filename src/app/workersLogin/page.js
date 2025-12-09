@@ -62,6 +62,7 @@ const Page = () => {
 
     workerLogin(username, password, bossId, weekId)
       .then((res) => {
+        console.log("Login response:", res);
         if (res.success) {
           // Navigate to WorkerShiftAssignments page
           router.push("/workersShiftAssignments");
