@@ -3,8 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { workerLogin } from "../../services/worker";
+import Loader from "../../components/UI/Loader";
 
-// --- START: Replacement for next/navigation.useSearchParams ---
+// 1. Import the icons from react-icons (using Feather icons for a modern look)
+import { FiUser, FiLock } from "react-icons/fi"; 
+
 const useClientSearchParams = () => {
   const [params, setParams] = useState(new URLSearchParams(""));
 
@@ -19,31 +22,6 @@ const useClientSearchParams = () => {
     get: (key) => params.get(key),
   };
 };
-// --- END ---
-
-// --- Icons ---
-const UserIcon = (props) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 448 512"
-    fill="currentColor"
-  >
-    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
-  </svg>
-);
-
-const LockIcon = (props) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 448 512"
-    fill="currentColor"
-  >
-    <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z" />
-  </svg>
-);
-// --- END ---
 
 const Page = () => {
   const router = useRouter();
@@ -51,104 +29,133 @@ const Page = () => {
   const bossId = searchParams.get("boss_id");
   const weekId = searchParams.get("week_id");
 
-  // State for Login form
+  // State
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
 
-    workerLogin(username, password, bossId, weekId)
-      .then((res) => {
-        console.log("Login response:", res);
-        if (res.success) {
-          // Navigate to WorkerShiftAssignments page
-          router.push("/workersShiftAssignments");
-        } else {
-          setError("Invalid credentials. Please try again.");
-        }
-      })
-      .catch((err) => {
-        console.error("Login error:", err);
-        setError("An error occurred during login.");
-      });
+    try {
+      const res = await workerLogin(username, password, bossId, weekId);
+      console.log("Login response:", res);
+
+      if (res.success) {
+        router.push("/workersShiftAssignments");
+      } else {
+        setError("Invalid credentials. Please try again.");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An error occurred during login.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-8">
-      {/* Header and Key Display */}
-      <div className="w-full max-w-xl bg-white shadow-xl rounded-2xl p-6 mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-800 mb-4">
-          Application Access
-        </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 relative overflow-hidden">
+      
+      {/* Decorative background blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter opacity-30 animate-blob"></div>
+      <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter opacity-30 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-[-20%] left-[20%] w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter opacity-30 animate-blob animation-delay-4000"></div>
 
-        {bossId && weekId ? (
-          <div className="bg-purple-50 p-4 rounded-xl border border-purple-200">
-            <p className="text-sm font-semibold text-purple-700">
-              URL Parameter Detected:
-            </p>
-            <p className="text-xl font-mono text-purple-900 break-all">
-              boss_id: {bossId}
-              <br />
-              week_id: {weekId}
-            </p>
+      {/* Main Card */}
+      <div className="w-full max-w-md bg-white/80 shadow-2xl rounded-3xl p-8 border border-white/50 relative z-10 transition-all duration-300 hover:shadow-purple-500/20">
+        
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-tr from-purple-600 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg mb-4 transform rotate-3">
+            {/* Using React Icon here */}
+            <FiUser className="w-8 h-8 text-white" />
           </div>
-        ) : (
-          <p className="text-lg text-gray-500 bg-gray-100 p-4 rounded-xl">
-            Missing parameters in URL.
+          <h1 className="text-2xl font-extrabold text-gray-800 tracking-tight">
+            Welcome Back!
+          </h1>
+          <p className="text-sm text-gray-500 mt-2">
+            Please access your shift assignments
           </p>
-        )}
-      </div>
+        </div>
 
-      {/* Login Section */}
-      <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 border-t-4 border-purple-600">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-          <UserIcon className="mr-3 text-purple-600 w-6 h-6" /> Worker Login
-        </h2>
-
+        {/* Error Message */}
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
-            {error}
+          <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm rounded-r shadow-sm animate-pulse">
+            <p className="font-medium">Access Denied</p>
+            <p>{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          {/* Username Input */}
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Username"
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        {/* Form */}
+        <form onSubmit={handleLogin} className="space-y-6">
+          
+          {/* Username */}
+          <div className="group space-y-1">
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">
+              Username
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                {/* React Icon in input */}
+                <FiUser className="h-5 w-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
+              </div>
+              <input
+                type="text"
+                placeholder="Enter your username"
+                className="block w-full pl-11 pr-4 py-3 bg-gray-50 border-none rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:bg-white transition-all shadow-inner"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          {/* Password Input */}
-          <div className="relative">
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <LockIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+          {/* Password */}
+          <div className="group space-y-1">
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">
+              Password
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                {/* React Icon in input */}
+                <FiLock className="h-5 w-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
+              </div>
+              <input
+                type="password"
+                placeholder="••••••••"
+                className="block w-full pl-11 pr-4 py-3 bg-gray-50 border-none rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:bg-white transition-all shadow-inner"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 rounded-xl text-white font-semibold transition-all shadow-md bg-purple-600 hover:bg-purple-700"
+            disabled={isLoading}
+            className="w-full flex items-center justify-center py-3.5 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-purple-500/30 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Log In
+            {isLoading ? (
+              <>
+                <span className="ml-2">Signing in...</span>
+              </>
+            ) : (
+              "Access Shifts"
+            )}
           </button>
+            {isLoading && <Loader />}
         </form>
+
+        {/* Footer Text */}
+        <p className="mt-8 text-center text-xs text-gray-400">
+          Protected Area • Shift Management System
+        </p>
       </div>
     </div>
   );

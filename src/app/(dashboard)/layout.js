@@ -2,7 +2,7 @@ import Navbar from './../../components/UI/Navbar';
 
 export default function MainLayout({ children }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-col md:flex-row h-screen">
       {/* Sidebar/Nav only appears for routes inside (main) */}
       <Navbar /> 
       

@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 // 1. Define routes and their allowed roles
 const BOSS_ROUTES = ["/shifts", "/workers", "/roles"];
 const WORKER_ROUTES = ["/workersShiftAssignments"];
+const ADMIN_ROUTES = ["/admin"];
 
 const LOGIN_URL = "/login";
 const UNAUTHORIZED_URL = "/unauthorized";
@@ -24,6 +25,10 @@ export async function middleware(request) {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
+  const isAdminRoute = ADMIN_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`)
+  );
+
   // 2. Perform ONE Unified Auth Check
   try {
     const res = await fetch(BACKEND_STATUS_URL, {
@@ -42,7 +47,17 @@ export async function middleware(request) {
     const userRoles = userData.roles || [];
 
     // 3. Check Permissions
-    // Scenario A: User is trying to access Boss Routes
+    // Scenario A: User is trying to access Admin Routes
+    if (isAdminRoute) {
+      const isAdmin = userRoles.includes("admin");
+      if (!isAdmin) {
+        const url = request.nextUrl.clone();
+        url.pathname = UNAUTHORIZED_URL;
+        return NextResponse.redirect(url);
+      }
+    }
+
+    // Scenario B: User is trying to access Boss Routes
     if (isBossRoute) {
       const isBoss = userRoles.includes("boss") || userRoles.includes("admin");
       if (!isBoss) {
@@ -53,7 +68,7 @@ export async function middleware(request) {
       }
     }
 
-    // Scenario B: User is trying to access Worker Routes
+    // Scenario C: User is trying to access Worker Routes
     if (isWorkerRoute) {
       const isWorker = userRoles.includes("worker");
       // Optional: Do bosses also have access to worker views?
@@ -82,5 +97,6 @@ export const config = {
     "/workers/:path*",
     "/roles/:path*",
     "/workersShiftAssignments/:path*",
+    "/admin/:path*",
   ],
 };

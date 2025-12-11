@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { registerUser } from "../../services/users";
+// Importing icons - added FiUserPlus for the register context
+import { FiUser, FiLock, FiUserPlus } from "react-icons/fi"; 
+import Loader from "../../components/UI/Loader";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -12,10 +16,11 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
+    // 1. Client-side Validation
     if (!username.trim() || !password) {
       setError("Please fill all required fields.");
       return;
@@ -26,105 +31,143 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
+
     try {
-      // UI-only: no DB call here yet
       console.log("Register (UI):", { username, password });
-      registerUser(username, password).then((res) => {
-        if (res.data.message === "Username already exists.") {
-          setError("Username already exists.");
-          setLoading(false);
-          return;
-        }
-        // simulate success -> navigate to login
-        router.push("/login");
-      });
+      
+      const res = await registerUser(username, password);
+
+      // Check for specific backend message
+      if (res.data && res.data.message === "Username already exists.") {
+        setError("Username already exists.");
+        setLoading(false);
+        return;
+      }
+
+      // Success -> navigate to login
+      router.push("/login");
+
     } catch (err) {
-      setError("Registration error");
+      console.error(err);
+      setError("Registration error. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* LEFT SIDE (Marketing/Splash) */}
-      <div className="hidden md:flex w-1/2 bg-gradient-to-br from-purple-700 to-purple-500 text-white p-12 relative overflow-hidden">
-        <div className="absolute top-10 left-10 w-24 h-24 border-4 border-white rounded-xl opacity-30" />
-        <div className="absolute bottom-20 right-10 w-36 h-36 border-4 border-white rounded-full opacity-20" />
+    // 1. Background: Modern Soft Gradient with animated blobs (Exact match to Login)
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 relative overflow-hidden">
+      
+      {/* Decorative background blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter opacity-30 animate-blob"></div>
+      <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter opacity-30 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-[-20%] left-[20%] w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter opacity-30 animate-blob animation-delay-4000"></div>
 
-        <div className="relative z-10 mt-20">
-          <h1 className="text-4xl font-bold mb-4">Create your account</h1>
-          <p className="text-lg opacity-90">
-            Join now to manage shifts and submit availability.
+      {/* 2. The Glass Card */}
+      <div className="w-full max-w-md bg-white/70 shadow-2xl rounded-3xl p-8 border border-white/50 relative z-10">
+        
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-tr from-purple-600 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg mb-4 transform rotate-3">
+            {/* Using FiUserPlus to signify Registration */}
+            <FiUserPlus className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight mb-2">
+            Create Account
+          </h1>
+          <p className="text-sm text-gray-500">
+            Join now to manage your shifts
           </p>
         </div>
-      </div>
 
-      {/* RIGHT SIDE (Form) */}
-      <div className="w-full md:w-1/2 bg-gray-50 flex items-center justify-center px-6 md:px-16 py-16">
-        <div className="w-full max-w-sm bg-white border border-gray-200 rounded-2xl shadow-xl p-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Register</h2>
+        {/* Error Message */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm rounded-r shadow-sm animate-pulse">
+            {error}
+          </div>
+        )}
 
-          {error && (
-            <div className="mb-4 p-3 text-sm text-red-700 bg-red-50 border border-red-100 rounded">
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div>
+        <form onSubmit={onSubmit} className="space-y-6">
+          
+          {/* Username Input */}
+          <div className="group space-y-1">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FiUser className="h-5 w-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
+              </div>
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-full px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                className="block w-full pl-11 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:bg-white focus:border-transparent transition-all shadow-sm"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
+          </div>
 
-            <div>
+          {/* Password Input */}
+          <div className="group space-y-1">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FiLock className="h-5 w-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
+              </div>
               <input
                 type="password"
-                className="w-full border border-gray-300 rounded-full px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                className="block w-full pl-11 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:bg-white focus:border-transparent transition-all shadow-sm"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
+          </div>
 
-            <div>
+          {/* Confirm Password Input */}
+          <div className="group space-y-1">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <FiLock className="h-5 w-5 text-gray-400 group-focus-within:text-purple-600 transition-colors" />
+              </div>
               <input
                 type="password"
-                className="w-full border border-gray-300 rounded-full px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                className="block w-full pl-11 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:bg-white focus:border-transparent transition-all shadow-sm"
                 placeholder="Confirm password"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 required
               />
             </div>
+          </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full rounded-full py-3 font-medium transition-colors ${
-                loading
-                  ? "bg-gray-300 text-gray-700 cursor-not-allowed"
-                  : "bg-purple-600 text-white hover:bg-purple-700"
-              }`}
-            >
-              {loading ? "Creating..." : "Create account"}
-            </button>
-          </form>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full flex items-center justify-center py-3.5 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-purple-500/30 transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <span className="ml-2">Creating Account...</span>
+            ) : (
+              "Register"
+            )}
+          </button>
+          
+          {/* Your Custom Loader placement */}
+          {loading && <Loader />}
+        </form>
 
-          <p className="mt-6 text-center text-sm text-gray-600">
-            Already registered?{" "}
-            <a href="/login" className="text-purple-600 hover:underline">
-              Sign in
-            </a>
-          </p>
-        </div>
+        {/* Footer Link */}
+        <p className="mt-8 text-center text-sm text-gray-500">
+          Already registered?{" "}
+          <Link
+            href="/login"
+            className="font-semibold text-purple-600 hover:text-purple-500 hover:underline transition-colors"
+          >
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
   );

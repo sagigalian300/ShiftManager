@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useTranslations} from "use-intl";
 
 const WorkersPicker = ({
   roleId,
@@ -8,6 +9,8 @@ const WorkersPicker = ({
   unSelectedWorkers,
   setUnSelectedWorkers,
 }) => {
+  const t = useTranslations("WorkersPicker");
+
   const handleSelect = (e) => {
     const selectedWorkerId = Number(e.target.value);
     const workerObj = workers.find((w) => w.id === selectedWorkerId);
@@ -32,7 +35,7 @@ const WorkersPicker = ({
 
   return (
     <div className="bg-white shadow-lg rounded-2xl p-6 mb-6 transition-all border border-gray-200">
-      <h2 className="text-lg font-semibold mb-3 text-gray-700">Workers</h2>
+      <h2 className="text-lg font-semibold mb-3 text-gray-700">{t("workers")}</h2>
 
       {/* Select Box */}
       <select
@@ -41,7 +44,7 @@ const WorkersPicker = ({
         defaultValue=""
       >
         <option value="" disabled>
-          Select a worker
+          {t("selectWorker")}
         </option>
         {unSelectedWorkers.map((worker) => (
           <option key={worker.id} value={worker.id}>

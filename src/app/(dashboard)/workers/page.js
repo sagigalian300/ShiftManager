@@ -1,13 +1,15 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
+import { useTranslations } from "use-intl";
 import AddWorker from "../../../components/workers/AddWorker";
 import WorkerCard from "../../../components/workers/WorkerCard";
 import { addWorker, delWorker, getAllWorkers } from "../../../services/worker";
 import Loader from "../../../components/UI/Loader";
 import { getAllRoles } from "../../../services/role";
+import { getCookie } from "cookies-next";
 
 export default function Workers() {
+  const t = useTranslations("Workers");
   const [showForm, setShowForm] = useState(false);
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -87,22 +89,16 @@ export default function Workers() {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-gray-50 flex-1 overflow-x-scroll">
+    <div className="p-3 pt-0 min-h-screen flex-1 overflow-x-scroll">
       {/* HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-800">Workers</h1>
-          <p className="text-gray-600">
-            Manage your team and analyze salary performance.
-          </p>
-        </div>
+      <div className="flex flex-row items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">{t("title")}</h1>
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="mt-4 sm:mt-0 px-6 py-2 rounded-full bg-purple-600 text-white 
-                     hover:bg-purple-700 transition-all font-medium shadow-md"
+          className="w-fit sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
         >
-          {showForm ? "Cancel" : "Add New Worker"}
+          {showForm ? t("cancel") : t("add")}
         </button>
       </div>
 
@@ -111,17 +107,17 @@ export default function Workers() {
         <div className="bg-white shadow-md rounded-2xl p-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-700 mb-1">
-              Salary Analysis
+              {t("salaryAnalysis")}
             </h2>
             <p className="text-gray-600">
-              Average salary per hour:{" "}
+              {t("avarageSalary")}:{" "}
               <span className="font-semibold text-purple-700">
                 {avgSalary}₪
               </span>
             </p>
           </div>
           <div className="mt-3 sm:mt-0 text-sm text-gray-500">
-            Total Workers:{" "}
+            {t("totalWorkers")}:{" "}
             <span className="font-semibold text-gray-700">
               {workers.length}
             </span>

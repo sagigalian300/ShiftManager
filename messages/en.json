@@ -1,0 +1,99 @@
+{
+  "Navbar": {
+    "shifts": "Shifts",
+    "workers": "Workers",
+    "roles": "Roles",
+    "admin": "Admin",
+    "logout": "Logout"
+  },
+  "LanguageSwitcher": {
+    "language": "Language",
+    "en": "EN",
+    "he": "HE"
+  },
+  "Shifts": {
+    "title": "Shifts",
+    "createWeek": "New Week"
+  },
+  "WeekCard": {
+    "title": "Week Overview",
+    "edit": "Edit",
+    "link": "Link",
+    "excel": "Excel",
+    "delete": "Delete",
+    "smartCreation": "Smart Creation"
+  },
+  "Day": {
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  },
+  "ShiftCard": {
+    "morning": "Morning",
+    "evening": "Evening",
+    "open": "Open",
+    "close": "Close",
+    "morningShift": "Morning Shift",
+    "eveningShift": "Evening Shift",
+    "save": "Save"
+  },
+  "WorkersPicker": {
+    "workers": "Workers",
+    "selectWorker": "Select a Worker"
+  },
+  "ShiftRole": {
+    "workersAssigned": "workers assigned",
+    "noWorkersAssigned": "No workers assigned yet"
+  },
+  "Workers": {
+    "title": "Workers",
+    "add": "add",
+    "cancel": "cancel",
+    "salaryAnalysis": "Salary Analysis",
+    "avarageSalary": "Avarage salary per hour",
+    "totalWorkers": "Total Workers"
+  },
+  "WorkerCard": {
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "EditWorker": {
+    "title": "Edit Worker",
+    "close": "Close",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "salary": "Salary",
+    "rank": "Rank",
+    "password": "Password (Leave blank to keep current)",
+    "errorNoRole": "Worker must have at least one role",
+    "email": "Email",
+    "roles": "Roles",
+    "save": "Save"
+  },
+  "AddWorker": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "password": "Password",
+    "selectRole": "Select a role",
+    "salary": "Salary",
+    "rank": "Rank",
+    "addWorker": "Add Worker",
+    "chosenRoles": "Chosen Roles"
+  },
+  "Roles": {
+    "title": "Roles",
+    "add": "Add"
+  },
+  "RoleCard": {
+    "delete": "Delete",
+    "workers": "Workers",
+    "edit": "Edit"
+  }
+}

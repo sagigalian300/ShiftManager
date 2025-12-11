@@ -6,8 +6,10 @@ import Loader from "../../../components/UI/Loader";
 import WeekCard from "../../../components/shifts/WeekCard";
 import { addWeeklyShifts } from "../../../services/shifts";
 import { getAllWeeks } from "../../../services/shifts";
+import { useTranslations } from "next-intl";
 
 const Shifts = () => {
+  const t = useTranslations("Shifts");
   const [weeks, setWeeks] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [roles, setRoles] = useState([]);
@@ -72,14 +74,14 @@ const Shifts = () => {
   };
 
   return (
-    <div className="flex flex-col w-full p-6 overflow-x-scroll">
+    <div className="flex flex-col w-full p-2 pt-0 overflow-x-scroll">
       <div className="flex flex-row justify-between items-center text-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Shift</h1>
+        <h1 className="text-3xl font-bold text-gray-800">{t("title")}</h1>
         <button
           onClick={handleCreateWeek}
-          className="w-full sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+          className="w-fit sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
         >
-          New week
+          {t("createWeek")}
         </button>
       </div>
       {loading && <Loader />}

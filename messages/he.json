@@ -1,0 +1,99 @@
+{
+  "Navbar": {
+    "shifts": "משמרות",
+    "workers": "עובדים",
+    "roles": "תפקידים",
+    "admin": "ניהול",
+    "logout": "התנתק"
+  },
+  "LanguageSwitcher": {
+    "language": "שפה",
+    "en": "אנגלית",
+    "he": "עברית"
+  },
+  "Shifts": {
+    "title": "משמרות",
+    "createWeek": "שבוע חדש"
+  },
+  "WeekCard": {
+    "title": "סקירת שבוע",
+    "edit": "ערוך",
+    "link": "לינק",
+    "excel": "אקסל",
+    "delete": "מחק",
+    "smartCreation": "יצירה חכמה"
+  },
+  "Day": {
+    "sunday": "ראשון",
+    "monday": "שני",
+    "tuesday": "שלישי",
+    "wednesday": "רביעי",
+    "thursday": "חמישי",
+    "friday": "שישי",
+    "saturday": "שבת"
+  },
+  "ShiftCard": {
+    "morning": "בוקר",
+    "evening": "ערב",
+    "open": "פתח",
+    "close": "סגור",
+    "morningShift": "משמרת בוקר",
+    "eveningShift": "משמרת ערב",
+    "save": "שמור"
+  },
+  "WorkersPicker": {
+    "workers": "עובדים",
+    "selectWorker": "בחר עובד"
+  },
+  "ShiftRole": {
+    "workersAssigned": "עובדים משובצים",
+    "noWorkersAssigned": "עדיין לא שובצו עובדים"
+  },
+  "Workers": {
+    "title": "עובדים",
+    "add": "הוסף",
+    "cancel": "בטל",
+    "salaryAnalysis": "ניתוח שכר",
+    "avarageSalary": "משכורת ממוצעת לשעה",
+    "totalWorkers": "סך כל העובדים"
+  },
+  "WorkerCard": {
+    "edit": "ערוך",
+    "delete": "מחק"
+  },
+  "EditWorker": {
+    "title": "ערוך עובד",
+    "close": "סגור",
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "phone": "טלפון",
+    "salary": "משכורת",
+    "rank": "ניקוד",
+    "password": "סיסמה (השאר ריק כדי לשמור על הנוכחית)",
+    "errorNoRole": "לעובד חייב להיות לפחות תפקיד אחד",
+    "email": "אימייל",
+    "roles": "תפקידים",
+    "save": "שמור"
+  },
+  "AddWorker": {
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "email": "אימייל",
+    "phone": "טלפון",
+    "password": "סיסמה",
+    "selectRole": "בחר תפקיד",
+    "salary": "משכורת",
+    "rank": "ניקוד",
+    "addWorker": "הוסף עובד",
+    "chosenRoles": "תפקידים שנבחרו"
+  },
+  "Roles": {
+    "title": "תפקידים",
+    "add": "הוסף"
+  },
+  "RoleCard": {
+    "delete": "מחק",
+    "workers": "עובדים",
+    "edit": "ערוך"
+  }
+}

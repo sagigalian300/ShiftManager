@@ -26,7 +26,7 @@ const Page = () => {
             You must be authenticated to view this page.
           </p>
           <p className="text-gray-600 text-base">
-            Please log in with valid credentials to access shift assignments.
+            Please log in with valid credentials to access.
           </p>
         </div>
 

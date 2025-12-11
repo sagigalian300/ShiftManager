@@ -5,8 +5,10 @@ import RolesList from "../../../components/roles/RolesList";
 import RoleForm from "../../../components/roles/RoleForm";
 import { addRole, getAllRoles, deleteRole } from "../../../services/role";
 import Loader from "../../../components/UI/Loader";
+import {useTranslations} from 'use-intl';
 
 const Roles = () => {
+  const t = useTranslations("Roles");
   const [roles, setRoles] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -47,25 +49,23 @@ const Roles = () => {
   };
 
   return (
-    <div className="p-4 sm:p-8 flex-1 overflow-y-scroll">
+    <div className="flex flex-col w-full p-2 pt-0">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
-            Roles Management 🎭
+            {t('title')}
           </h1>
-          <p className="text-gray-600">
-            View, add, or remove available job roles.
-          </p>
+          
         </div>
         {/* BUTTON TO ADD A NEW ROLE */}
         {!showForm && (
           <button
             onClick={() => setShowForm(true)}
-            className="mb-6 px-6 py-3 bg-purple-600 text-white rounded-xl shadow-md 
-            hover:bg-purple-700 transition-all duration-300 mt-4 sm:mt-0"
+                     className="w-fit sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+
           >
-            Add New Role
+            {t('add')}
           </button>
         )}
       </div>

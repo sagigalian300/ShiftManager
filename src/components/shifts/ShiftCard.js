@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslations } from "use-intl";
 import ShiftRole from "./ShiftRole";
 import {
   addShiftAssignments,
@@ -7,6 +8,7 @@ import {
 import Loader from "../UI/Loader";
 
 const ShiftCard = ({ id, type, workers, roles }) => {
+  const t = useTranslations("ShiftCard");
   const [open, setOpen] = useState(false);
   const [rolesWorkers, setRolesWorkers] = useState(
     Array.from({ length: roles.length }, () => [])
@@ -42,13 +44,13 @@ const ShiftCard = ({ id, type, workers, roles }) => {
   return (
     <div>
       {/* Shift header */}
-      <div className="flex flex-row items-center mb-2">
+      <div className="flex flex-row items-center mb-2 border-b border-gray-300 pb-2">
         <h1
           className={`text-xl font-semibold m-2 ${
             type === 0 ? "text-blue-600" : "text-purple-600"
           }`}
         >
-          {type === 0 ? "Morning Shift" : "Evening Shift"}
+          {type === 0 ? t("morning") : t("evening")}
         </h1>
 
         <button
@@ -57,11 +59,9 @@ const ShiftCard = ({ id, type, workers, roles }) => {
           }}
           className="w-full sm:w-auto m-2 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
         >
-          {open ? "Close" : "Open"}
+          {open ? t("close") : t("open")}
         </button>
       </div>
-
-      <h1>Shift with id = {id}</h1>
 
       {/* Closed state: empty */}
       {!open ? null : (
@@ -71,7 +71,7 @@ const ShiftCard = ({ id, type, workers, roles }) => {
             {/* Modal header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold">
-                {type === 0 ? "Morning Shift" : "Evening Shift"}
+                {type === 0 ? t("morningShift") : t("eveningShift")}
               </h2>
               <button
                 onClick={() => {
@@ -81,7 +81,7 @@ const ShiftCard = ({ id, type, workers, roles }) => {
                 }}
                 className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
               >
-                Close
+                {t("close")}
               </button>
             </div>
             {loading && <Loader />}
@@ -106,7 +106,7 @@ const ShiftCard = ({ id, type, workers, roles }) => {
               onClick={handleSaveShift}
               className="mt-6 w-full sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
             >
-              Save
+              {t("save")}
             </button>
           </div>
         </div>

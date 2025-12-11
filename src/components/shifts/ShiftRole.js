@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
+import { useTranslations } from "use-intl";
 import WorkersPicker from "../workers/WorkersPicker";
+
 const ShiftRole = ({
   role,
   workers,
@@ -9,6 +11,7 @@ const ShiftRole = ({
   setUnSelectedWorkers,
   shiftAssignments,
 }) => {
+  const t = useTranslations("ShiftRole");
   const [selectedWorkers, setSelectedWorkers] = React.useState([]);
 
   useEffect(() => {
@@ -53,8 +56,8 @@ const ShiftRole = ({
       />
       <div className="text-gray-500 italic">
         {selectedWorkers.length === 0
-          ? "No workers assigned yet..."
-          : `${selectedWorkers.length} workers assigned`}
+          ? t("noWorkersAssigned")
+          : `${selectedWorkers.length} ${t("workersAssigned")}`}
       </div>
     </div>
   );

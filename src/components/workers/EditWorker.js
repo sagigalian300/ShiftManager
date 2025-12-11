@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 
 const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
+  const t = useTranslations("EditWorker");
+
   const [firstName, setFirstName] = useState(worker.first_name);
   const [lastName, setLastName] = useState(worker.last_name);
   const [email, setEmail] = useState(worker.email || "");
@@ -37,7 +40,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
 
       setEditing(false);
     } else {
-      alert("Worker must have at least one role.");
+      alert(t("errorNoRole"));
     }
   };
 
@@ -48,14 +51,14 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold text-gray-800">
-              Edit Worker – {worker.first_name} {worker.last_name}
+              {t("title")} – {worker.first_name} {worker.last_name}
             </h2>
 
             <button
               onClick={() => setEditing(false)}
               className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
             >
-              Close
+              {t("close")}
             </button>
           </div>
 
@@ -65,7 +68,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             <input
               type="text"
               className="border border-gray-300 rounded-xl p-3"
-              placeholder="First Name"
+              placeholder={t("firstName")}
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
@@ -73,7 +76,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             <input
               type="text"
               className="border border-gray-300 rounded-xl p-3"
-              placeholder="Last Name"
+              placeholder={t("lastName")}
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -81,7 +84,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             <input
               type="email"
               className="border border-gray-300 rounded-xl p-3"
-              placeholder="Email"
+              placeholder={t("email")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -89,7 +92,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             <input
               type="text"
               className="border border-gray-300 rounded-xl p-3"
-              placeholder="Phone"
+              placeholder={t("phone")}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
@@ -97,7 +100,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             <input
               type="password"
               className="border border-gray-300 rounded-xl p-3"
-              placeholder="Change Password (leave blank if no change) 🔒💰"
+              placeholder={t("password")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -105,7 +108,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             <input
               type="number"
               className="border border-gray-300 rounded-xl p-3"
-              placeholder="Rank 🥇💰"
+              placeholder={t("rank")}
               value={rank}
               onChange={(e) => setRank(Number(e.target.value))}
             />
@@ -114,14 +117,14 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             <input
               type="number"
               className="border border-gray-300 rounded-xl p-3"
-              placeholder="Salary"
+              placeholder={t("salary")}
               value={salary}
               onChange={(e) => setSalary(Number(e.target.value))}
             />
           </div>
 
           {/* Roles section */}
-          <h3 className="text-lg font-semibold mb-3">Roles</h3>
+          <h3 className="text-lg font-semibold mb-3">{t("roles")}</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {roles.map((role) => (
               <button
@@ -147,7 +150,7 @@ const EditWorkerCard = ({ worker, roles, onSave, setEditing }) => {
             onClick={saveChanges}
             className="mt-6 w-full sm:w-auto px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
           >
-            Save Changes
+            {t("save")}
           </button>
         </div>
       </div>

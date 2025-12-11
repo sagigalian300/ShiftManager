@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useTranslations } from "use-intl";
 
 const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
+  const t = useTranslations("AddWorker");
+
   // Add role from select box
   const handleRoleSelect = (e) => {
     const selectedRoleId = Number(e.target.value);
@@ -36,14 +39,14 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
         {/* Row 1: Name Fields */}
         <input
           type="text"
-          placeholder="First Name"
+          placeholder={t("firstName")}
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={newWorker.first_name}
           onChange={handleChange("first_name")}
         />
         <input
           type="text"
-          placeholder="Last Name"
+          placeholder={t("lastName")}
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={newWorker.last_name}
           onChange={handleChange("last_name")}
@@ -52,14 +55,14 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
         {/* Row 2: Contact Fields */}
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t("email")}
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={newWorker.email}
           onChange={handleChange("email")}
         />
         <input
           type="text"
-          placeholder="Phone"
+          placeholder={t("phone")}
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={newWorker.phone}
           onChange={handleChange("phone")}
@@ -69,7 +72,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
         <input
           required
           type="password"
-          placeholder="Password"
+          placeholder={t("password")}
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={newWorker.password || ""} // Use || "" to handle undefined state gracefully
           onChange={handleChange("password")}
@@ -79,7 +82,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
         <input
           required
           type="number"
-          placeholder="Rank"
+          placeholder={t("rank")}
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={newWorker.rank || ""} // Use || "" to handle undefined state gracefully
           onChange={handleChange("rank")}
@@ -89,7 +92,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
         <input
           required
           type="number"
-          placeholder="Salary per hour (₪)"
+          placeholder={t("salary")}
           className="border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
           value={newWorker.salary}
           onChange={handleChange("salary")}
@@ -102,7 +105,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
           defaultValue=""
         >
           <option value="" disabled>
-            Select a role
+            {t("selectRole")}
           </option>
           {roles.map((role) => (
             <option key={role.id} value={role.id}>
@@ -116,7 +119,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
       {/* Chosen roles display */}
       {newWorker.roles.length > 0 && (
         <div className="mt-2">
-          <p className="font-medium mb-1">Chosen Roles:</p>
+          <p className="font-medium mb-1">{t("chosenRoles")}</p>
           <div className="flex flex-wrap gap-2">
             {newWorker.roles.map((role) => (
               <div
@@ -141,7 +144,7 @@ const AddWorker = ({ roles, handleAddWorker, newWorker, setNewWorker }) => {
         type="submit"
         className="w-full sm:w-auto mt-4 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
       >
-        Add Worker
+        {t("addWorker")}
       </button>
     </form>
   );

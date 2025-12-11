@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import EditWorker from "./EditWorker";
 import { updateWorkerDetails } from "../../services/worker";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
 const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
+  const t = useTranslations("WorkerCard");
   const [editing, setEditing] = useState(false);
 
   const updateWorker = (updatedWorker) => {
@@ -100,7 +102,7 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
         {/* <p className="text-gray-600 text-sm mt-1">🔒 {worker.password}</p> */}
         <p className="text-gray-600 text-sm mt-1">📞 {worker.phone}</p>
         <p className="text-gray-700 font-medium mt-1">
-          💰 Salary per hour:{" "}
+          💰{" "}
           <span className="text-purple-700">{worker.salary}₪</span>
         </p>
         <p className="text-gray-600 text-sm mt-1">
@@ -132,7 +134,7 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
                hover:bg-purple-700 transition-all font-medium shadow-sm"
         >
           <FaEdit size={14} />
-          <span>Edit</span>
+          <span>{t("edit")}</span>
         </button>
 
         {/* Delete Button: Red text/outline for destructive action */}
@@ -145,7 +147,7 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
                hover:bg-red-600 transition-all font-medium shadow-sm"
         >
           <FaTrash size={14} />
-          <span>Delete</span>
+          <span>{t("delete")}</span>
         </button>
       </div>
     </div>
