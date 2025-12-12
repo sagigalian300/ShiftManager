@@ -1,0 +1,24 @@
+{
+  "LanguageSwitcher": {
+    "language": "اللغة",
+    "en": "الإنجليزية",
+    "he": "العبرية",
+    "ar": "العربية"
+  },
+  "workersShiftAssignments": {
+    "hello": "مرحباً",
+    "letsSetYourShifts": "لنقم بإعداد جدولك الزمني",
+    "weekStartsAt": "يبدأ الأسبوع في",
+    "sunday": "الأحد",
+    "monday": "الاثنين",
+    "tuesday": "الثلاثاء",
+    "wednesday": "الأربعاء",
+    "thursday": "الخميس",
+    "friday": "الجمعة",
+    "saturday": "السبت",
+    "morningShift": "وردية صباحية",
+    "eveningShift": "وردية مسائية",
+    "numberOfShiftsSelected": "ورديات تم اختيارها",
+    "confirm": "تأكيد التوافر"
+  }
+}

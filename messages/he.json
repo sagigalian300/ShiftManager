@@ -9,7 +9,8 @@
   "LanguageSwitcher": {
     "language": "שפה",
     "en": "אנגלית",
-    "he": "עברית"
+    "he": "עברית",
+    "ar": "ערבית"
   },
   "Shifts": {
     "title": "משמרות",
@@ -95,5 +96,21 @@
     "delete": "מחק",
     "workers": "עובדים",
     "edit": "ערוך"
+  },
+  "workersShiftAssignments": {
+    "hello": "שלום",
+    "letsSetYourShifts": "בוא נגדיר את לוח הזמנים שלך",
+    "weekStartsAt": "השבוע מתחיל ב",
+    "sunday": "ראשון",
+    "monday": "שני",
+    "tuesday": "שלישי",
+    "wednesday": "רביעי",
+    "thursday": "חמישי",
+    "friday": "שישי",
+    "saturday": "שבת",
+    "morningShift": "משמרת בוקר",
+    "eveningShift": "משמרת ערב",
+    "numberOfShiftsSelected": "משמרות נבחרו",
+    "confirm": "אשר זמינות"
   }
 }

@@ -75,7 +75,7 @@ const Navbar = () => {
         {/* BOTTOM SECTION */}
         <div className="border-t border-white/20 pt-4 flex flex-col gap-2">
           {/* USAGE 1: Desktop */}
-          <LanguageSwitcher />
+          <LanguageSwitcher languages={["en", "he"]} />
 
           <button
             className="w-full text-start px-4 py-2 rounded-xl transition-all duration-300 

@@ -9,7 +9,8 @@
   "LanguageSwitcher": {
     "language": "Language",
     "en": "EN",
-    "he": "HE"
+    "he": "HE",
+    "ar": "AR"
   },
   "Shifts": {
     "title": "Shifts",
@@ -95,5 +96,21 @@
     "delete": "Delete",
     "workers": "Workers",
     "edit": "Edit"
+  },
+  "workersShiftAssignments": {
+    "hello": "Hello",
+    "letsSetYourShifts": "Let's set your schedule",
+    "weekStartsAt": "Week starts at",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "morningShift": "Morning Shift",
+    "eveningShift": "Evening Shift",
+    "numberOfShiftsSelected": "shifts selected:",
+    "confirm": "Confirm Availability"
   }
 }
