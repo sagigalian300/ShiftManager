@@ -16,6 +16,22 @@ export async function addWeeklyShifts(days) {
   }
 }
 
+export async function deleteWeek(week_id) {
+  try {
+    const response = await api.delete(`shift/deleteWeek/${week_id}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Deleting week failed:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error(
+      error.response?.data?.message ||
+        "Deleting week failed due to an unknown error."
+    );
+  }
+}
+
 export async function addShiftAssignments(shift_data) {
   try {
     const response = await api.post("shift/addShiftAssignments", shift_data);
@@ -130,7 +146,9 @@ export async function computeOptimalAssignment(week_id) {
 
 export async function getWeekDataForExcelDocument(week_id) {
   try {
-    const response = await api.get(`shift/getWeekDataForExcelDocument/${week_id}`);
+    const response = await api.get(
+      `shift/getWeekDataForExcelDocument/${week_id}`
+    );
     return response.data;
   } catch (error) {
     console.error(

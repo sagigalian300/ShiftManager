@@ -27,7 +27,7 @@ export default async function RootLayout({ children }) {
   const messages = await getMessages();
 
   // 4. Calculate direction (LTR vs RTL) for Hebrew support
-  const direction = locale === "he" ? "rtl" : "ltr";
+  const direction = (locale === "he" || locale === "ar") ? "rtl" : "ltr";
 
   return (
     // 5. Pass the locale and direction to the HTML tag

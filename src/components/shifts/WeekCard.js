@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import Day from "./Day";
 import {
   computeOptimalAssignment,
+  deleteWeek,
   getDaysByWeekId,
   getEncryptedBossAndWeek,
   getWeekDataForExcelDocument,
@@ -16,7 +17,7 @@ import { IoIosLink } from "react-icons/io";
 import { MdOutlineModeEditOutline, MdSmartToy } from "react-icons/md";
 import { BsCalendar2Week } from "react-icons/bs";
 
-const WeekCard = ({ workers, roles, week_id }) => {
+const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
   const t = useTranslations("WeekCard");
   const [days, setDays] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,15 @@ const WeekCard = ({ workers, roles, week_id }) => {
       setLoading(false);
     });
   }, []);
+
+  const handleDeleteWeek = () => {
+    setLoading(true);
+    deleteWeek(week_id).then((res) => {
+      console.log("Week deleted:", res);
+      setWeeks((prevWeeks) => prevWeeks.filter((week) => week.id !== week_id));
+      setLoading(false);
+    });
+  };
 
   const startDate = days?.[0]?.date
     ? new Date(days[0].date).toLocaleDateString()
@@ -102,7 +112,7 @@ const WeekCard = ({ workers, roles, week_id }) => {
           <button
             type="button"
             // Added w-full here
-            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gray-600 text-white text-sm font-medium shadow hover:bg-purple-700 transition"
+            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gray-600 text-white text-sm font-medium shadow hover:bg-gray-700 transition"
             title="Edit Manually"
             onClick={() => setEditingManually(!editingManually)}
           >
@@ -126,6 +136,17 @@ const WeekCard = ({ workers, roles, week_id }) => {
           >
             <MdSmartToy />
             <h1 className="hidden md:block">{t("smartCreation")}</h1>
+          </button>
+
+          <button
+            type="button"
+            // Added w-full here
+            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-red-600 text-white text-sm font-medium shadow hover:bg-red-700 transition"
+            title="Delete"
+            onClick={handleDeleteWeek}
+          >
+            <MdOutlineModeEditOutline />
+            <h1 className="hidden md:block">{t("delete")}</h1>
           </button>
         </div>
         {loading && <Loader />}

@@ -99,8 +99,8 @@
   },
   "workersShiftAssignments": {
     "hello": "שלום",
-    "letsSetYourShifts": "בוא נגדיר את לוח הזמנים שלך",
-    "weekStartsAt": "השבוע מתחיל ב",
+    "letsSetYourShifts": "בואו נקבע את המשמרות שלך",
+    "weekStartsAt": "השבוע מתחיל ביום",
     "sunday": "ראשון",
     "monday": "שני",
     "tuesday": "שלישי",
@@ -110,7 +110,48 @@
     "saturday": "שבת",
     "morningShift": "משמרת בוקר",
     "eveningShift": "משמרת ערב",
-    "numberOfShiftsSelected": "משמרות נבחרו",
-    "confirm": "אשר זמינות"
+    "numberOfShiftsSelected": "נבחרו",
+    "confirm": "אישור זמינות",
+    "shift": "משמרת",
+    "shifts": "משמרות"
+  },
+  "ShiftSummerizer": {
+    "confirmAvailability": "אישור זמינות",
+    "weekStartsAt": "השבוע מתחיל ב",
+    "totalSelectedShifts": "סה״כ משמרות שנבחרו",
+    "noShiftsSelected": "לא נבחרו משמרות",
+    "sunday": "ראשון",
+    "monday": "שני",
+    "tuesday": "שלישי",
+    "wednesday": "רביעי",
+    "thursday": "חמישי",
+    "friday": "שישי",
+    "saturday": "שבת",
+    "morning": "בוקר",
+    "evening": "ערב",
+    "cancel": "ביטול",
+    "confirm": "אישור"
+  },
+  "SuccessPage": {
+    "title": "הפרטים התקבלו!",
+    "description": "זמינותך לשבוע הקרוב נשלחה בהצלחה. המנהל יבדוק את ההעדפות שלך בהקדם.",
+    "scheduleUpdated": "לוח הזמנים עודכן"
+  },
+  "OptimalBuilderReport": {
+    "title": "דוח שיבוץ",
+    "subtitle": "תוצאות אלגוריתם השיבוץ החכם",
+    "totalShifts": "סה״כ משמרות",
+    "assignedSlots": "משמרות ששובצו",
+    "unfilledSlots": "משמרות שלא שובצו",
+    "coverage": "כיסוי",
+    "totalPrice": "מחיר כולל",
+    "workersAssigned": "עובדים ששובצו",
+    "loadBalance": "איזון עומסים",
+    "minAssignments": "מינימום שיבוצים",
+    "avgAssignments": "ממוצע שיבוצים",
+    "maxAssignments": "מקסימום שיבוצים",
+    "workerAssignments": "פירוט שיבוצי עובדים",
+    "worker": "עובד",
+    "done": "סיום"
   }
 }

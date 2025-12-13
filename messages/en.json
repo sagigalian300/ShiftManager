@@ -110,7 +110,48 @@
     "saturday": "Saturday",
     "morningShift": "Morning Shift",
     "eveningShift": "Evening Shift",
-    "numberOfShiftsSelected": "shifts selected:",
-    "confirm": "Confirm Availability"
+    "numberOfShiftsSelected": "selected",
+    "confirm": "Confirm Availability",
+    "shift": "Shift",
+    "shifts": "Shifts"
+  },
+  "ShiftSummerizer": {
+    "confirmAvailability": "Confirm Availability",
+    "weekStartsAt": "Week starting",
+    "totalSelectedShifts": "Total selected shifts",
+    "noShiftsSelected": "No shifts selected",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "morning": "Morning",
+    "evening": "Evening",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "SuccessPage": {
+    "title": "You're All Set!",
+    "description": "Your availability for the upcoming week has been successfully submitted. Your manager will review your preferences shortly.",
+    "scheduleUpdated": "Schedule updated"
+  },
+  "OptimalBuilderReport": {
+    "title": "Assignment Report",
+    "subtitle": "Smart assignment algorithm results",
+    "totalShifts": "Total Shifts",
+    "assignedSlots": "Assigned Slots",
+    "unfilledSlots": "Unfilled Slots",
+    "coverage": "Coverage",
+    "totalPrice": "Total Price",
+    "workersAssigned": "Workers Assigned",
+    "loadBalance": "Load Balance",
+    "minAssignments": "Min Assignments",
+    "avgAssignments": "Avg Assignments",
+    "maxAssignments": "Max Assignments",
+    "workerAssignments": "Worker Assignments",
+    "worker": "Worker",
+    "done": "Done"
   }
 }

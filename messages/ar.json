@@ -7,8 +7,8 @@
   },
   "workersShiftAssignments": {
     "hello": "مرحباً",
-    "letsSetYourShifts": "لنقم بإعداد جدولك الزمني",
-    "weekStartsAt": "يبدأ الأسبوع في",
+    "letsSetYourShifts": "لنقم بتحديد وردياتك",
+    "weekStartsAt": "يبدأ الأسبوع يوم",
     "sunday": "الأحد",
     "monday": "الاثنين",
     "tuesday": "الثلاثاء",
@@ -18,7 +18,31 @@
     "saturday": "السبت",
     "morningShift": "وردية صباحية",
     "eveningShift": "وردية مسائية",
-    "numberOfShiftsSelected": "ورديات تم اختيارها",
-    "confirm": "تأكيد التوافر"
-  }
+    "numberOfShiftsSelected": "تم تحديدها",
+    "confirm": "تأكيد التوافر",
+    "shift": "وردية",
+    "shifts": "ورديات"
+  },
+  "ShiftSummerizer": {
+    "confirmAvailability": "تأكيد التوافر",
+    "weekStartsAt": "الأسبوع يبدأ في",
+    "totalSelectedShifts": "إجمالي الورديات المحددة",
+    "noShiftsSelected": "لم يتم تحديد أي ورديات",
+    "sunday": "الأحد",
+    "monday": "الاثنين",
+    "tuesday": "الثلاثاء",
+    "wednesday": "الأربعاء",
+    "thursday": "الخميس",
+    "friday": "الجمعة",
+    "saturday": "السبت",
+    "morning": "صباح",
+    "evening": "مساء",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد"
+  },
+  "SuccessPage": {
+  "title": "تم الأمر بنجاح!",
+  "description": "تم إرسال توافرك للأسبوع القادم بنجاح. سيقوم مديرك بمراجعة تفضيلاتك قريباً.",
+  "scheduleUpdated": "تم تحديث الجدول"
+}
 }

@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
+import { useTranslations } from "use-intl";
 
 const ShiftSummerizer = ({ summary, onConfirm, onCancel }) => {
+  const t = useTranslations("ShiftSummerizer");
+
   if (!summary) return null;
 
   return (
@@ -10,10 +13,10 @@ const ShiftSummerizer = ({ summary, onConfirm, onCancel }) => {
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <div className="p-6">
           <h3 className="text-xl font-semibold text-gray-800">
-            Confirm Availability
+            {t("confirmAvailability")}
           </h3>
           <p className="text-sm text-gray-500 mt-1">
-            Week starting:{" "}
+            {t("weekStartsAt")}:{" "}
             <span className="font-medium text-purple-700">
               {summary.weekStartDate || "N/A"}
             </span>
@@ -21,7 +24,7 @@ const ShiftSummerizer = ({ summary, onConfirm, onCancel }) => {
 
           <div className="mt-4 space-y-3 max-h-72 overflow-auto">
             <div className="text-sm text-gray-600">
-              Total selected shifts:{" "}
+              {t("totalSelectedShifts")}:{" "}
               <span className="font-medium text-gray-800">{summary.totalSelected}</span>
             </div>
 
@@ -33,7 +36,7 @@ const ShiftSummerizer = ({ summary, onConfirm, onCancel }) => {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-sm font-medium text-gray-800">
-                      {day.dateName ?? day.date}
+                      {t(day.dateName.toLowerCase())}
                     </div>
                     <div className="text-xs text-gray-400">{day.date}</div>
                   </div>
@@ -41,15 +44,15 @@ const ShiftSummerizer = ({ summary, onConfirm, onCancel }) => {
                   <ul className="ml-2 list-disc list-inside text-sm text-gray-700">
                     {day.shifts.map((s) => (
                       <li key={s.id}>
-                        {s.type === 0 ? "Morning" : "Evening"} — {s.start_time} —{" "}
-                        {s.end_time} (id: {s.id})
+                        {s.type === 0 ? t("morning") : t("evening")} — {s.start_time} —{" "}
+                        {s.end_time}
                       </li>
                     ))}
                   </ul>
                 </div>
               ))
             ) : (
-              <div className="text-sm text-gray-500">No shifts selected.</div>
+              <div className="text-sm text-gray-500">{t("noShiftsSelected")}</div>
             )}
           </div>
         </div>
@@ -59,13 +62,13 @@ const ShiftSummerizer = ({ summary, onConfirm, onCancel }) => {
             onClick={onCancel}
             className="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
           >
-            Cancel
+            {t("cancel")}
           </button>
           <button
             onClick={() => onConfirm && onConfirm(summary)}
             className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition"
           >
-            Confirm
+            {t("confirm")}
           </button>
         </div>
       </div>
