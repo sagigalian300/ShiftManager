@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { urlConnector } from "./utils/urlConnector";
 
 // 1. Define routes and their allowed roles
 const BOSS_ROUTES = ["/shifts", "/workers", "/roles"];
@@ -7,7 +8,7 @@ const ADMIN_ROUTES = ["/admin"];
 
 const LOGIN_URL = "/login";
 const UNAUTHORIZED_URL = "/unauthorized";
-const BACKEND_STATUS_URL = "http://localhost:3001/status"; // Single endpoint
+const BACKEND_STATUS_URL = urlConnector + "status"; // Single endpoint
 
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
