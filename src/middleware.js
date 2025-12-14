@@ -8,7 +8,7 @@ const ADMIN_ROUTES = ["/admin"];
 
 const LOGIN_URL = "/login";
 const UNAUTHORIZED_URL = "/unauthorized";
-const BACKEND_STATUS_URL = urlConnector + "status"; // Single endpoint
+// const BACKEND_STATUS_URL = urlConnector + "status"; // Single endpoint
 
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -30,7 +30,11 @@ export async function middleware(request) {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
+  
   // 2. Perform ONE Unified Auth Check
+  const baseUrl = request.nextUrl.origin;
+  const BACKEND_STATUS_URL = `${baseUrl}/api/status`;
+
   try {
     const res = await fetch(BACKEND_STATUS_URL, {
       method: "GET",
@@ -46,6 +50,8 @@ export async function middleware(request) {
 
     const userData = await res.json();
     const userRoles = userData.roles || [];
+
+    console.log("User Roles:", userRoles);
 
     // 3. Check Permissions
     // Scenario A: User is trying to access Admin Routes
