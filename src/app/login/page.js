@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { setCookie } from "cookies-next";
 import { loginUser } from "../../services/users";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -25,6 +26,20 @@ export default function LoginPage() {
 
       console.log("Login successful:", data.success);
       if (data.success) {
+        if (data.token) {
+          // הגדרת תוקף: 1000 * 60 * 60 * 24 (מ"שניות" ל"ימים")
+          const maxAgeSeconds = 60 * 60 * 24;
+
+          // שמירה בצד הלקוח עבור ה-Middleware
+          setCookie("auth_token", data.token, {
+            maxAge: maxAgeSeconds,
+            path: "/",
+            // הגדרות אלה מאפשרות ל-Middleware לראות את העוגייה
+            sameSite: "lax",
+            secure: true,
+          });
+          console.log("Client-side token set successfully for Middleware.");
+        }
         router.push("/workers");
       } else {
         setError("Invalid username or password.");
@@ -140,7 +155,7 @@ export default function LoginPage() {
               "Sign In"
             )}
           </button>
-            {isLoading && <Loader />}
+          {isLoading && <Loader />}
         </form>
 
         {/* Footer Link */}
