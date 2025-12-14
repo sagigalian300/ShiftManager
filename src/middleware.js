@@ -30,8 +30,8 @@ export async function middleware(request) {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
-  
   // 2. Perform ONE Unified Auth Check
+  /* this part is for the proxy (/api) (two lines below) */
   const baseUrl = request.nextUrl.origin;
   const BACKEND_STATUS_URL = `${baseUrl}/api/status`;
 

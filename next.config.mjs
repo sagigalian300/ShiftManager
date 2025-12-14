@@ -1,16 +1,16 @@
-/*import createNextIntlPlugin from 'next-intl/plugin';
+/*import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
- //@type {import('next').NextConfig} 
+// @type {import('next').NextConfig} //
 const nextConfig = {};
 
-export default withNextIntl(nextConfig);*/
-
+export default withNextIntl(nextConfig);
+*/
 // next.config.js
 
 import createNextIntlPlugin from "next-intl/plugin";
-import {urlConnector} from "./src/utils/urlConnector.js";
+import { urlConnector } from "./src/utils/urlConnector.js";
 
 const withNextIntl = createNextIntlPlugin();
 
