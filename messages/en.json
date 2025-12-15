@@ -22,7 +22,8 @@
     "link": "Link",
     "excel": "Excel",
     "delete": "Delete",
-    "smartCreation": "Smart Creation"
+    "smartCreation": "Smart",
+    "inspect": "Inspect"
   },
   "Day": {
     "sunday": "Sunday",
@@ -153,5 +154,25 @@
     "workerAssignments": "Worker Assignments",
     "worker": "Worker",
     "done": "Done"
+  },
+  "VisualizeWholeWeek": {
+    "title": "Weekly Shift Schedule",
+    "weekStarting": "Week starting:",
+    "print": "Print",
+    "close": "Close",
+    "closeTooltip": "Close view",
+    "loading": "Loading data...",
+    "morning": "Morning",
+    "evening": "Evening",
+    "other": "Other",
+    "noShifts": "---",
+    "emptyAssignments": "Empty",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
   }
 }

@@ -22,7 +22,8 @@
     "link": "לינק",
     "excel": "אקסל",
     "delete": "מחק",
-    "smartCreation": "יצירה חכמה"
+    "smartCreation": "חכם",
+    "inspect": "צפה"
   },
   "Day": {
     "sunday": "ראשון",
@@ -153,5 +154,25 @@
     "workerAssignments": "פירוט שיבוצי עובדים",
     "worker": "עובד",
     "done": "סיום"
+  },
+  "VisualizeWholeWeek": {
+    "title": "סידור עבודה שבועי",
+    "weekStarting": "שבוע מתחיל:",
+    "print": "הדפס",
+    "close": "סגור",
+    "closeTooltip": "סגור תצוגה",
+    "loading": "טוען נתונים...",
+    "morning": "בוקר",
+    "evening": "ערב",
+    "other": "אחר",
+    "noShifts": "---",
+    "emptyAssignments": "ריק",
+    "sunday": "ראשון",
+    "monday": "שני",
+    "tuesday": "שלישי",
+    "wednesday": "רביעי",
+    "thursday": "חמישי",
+    "friday": "שישי",
+    "saturday": "שבת"
   }
 }

@@ -1,74 +1,71 @@
 import React from "react";
 import { useTranslations } from "use-intl";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import { LuBriefcase } from "react-icons/lu";
 
 const RoleCard = ({ role, onDelete }) => {
   const t = useTranslations("RoleCard");
 
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_88px_auto] items-center gap-4 p-4 bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all">
-      <div className="flex items-start gap-4 min-w-0 justify-between items-center">
-        <div className="min-w-0 flex flex-row items-center justify-center">
-          <div className="flex-shrink-0 p-2">
-            <LuBriefcase size={30} />
-          </div>
-          <div className="flex flex-col">
-            <h3 className="text-lg font-semibold text-gray-900 truncate">
-              {role.name}
-            </h3>
-            <p
-              className="text-sm text-gray-600 mt-1 text-ellipsis overflow-hidden"
-              style={{
-                WebkitLineClamp: 2,
-                display: "-webkit-box",
-                WebkitBoxOrient: "vertical",
-              }}
-            >
-              {role.desc}
-            </p>
-          </div>
-
-          {role.tags && role.tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {role.tags.map((t) => (
-                <span
-                  key={t}
-                  className="text-xs px-2 py-0.5 bg-white/60 border border-gray-100 rounded-full text-gray-700"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          )}
+    <div className="group bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row gap-5 md:items-center justify-between">
+      
+      <div className="flex flex-col gap-2 flex-1 min-w-0">
+        <div className="flex flex-col">
+          <h3 className="text-xl font-bold text-gray-900 truncate tracking-tight">
+            {role.name}
+          </h3>
+          <p
+            className="text-sm text-gray-500 leading-relaxed"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {role.desc}
+          </p>
         </div>
+
+        {role.tags && role.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-1">
+            {role.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs font-medium px-2.5 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-200"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* center: fixed-width stat column (always vertically centered) */}
-      <div className="w-20 flex-shrink-0 text-center flex flex-col items-center justify-center">
-        <div className="text-sm text-gray-500">{t("workers")}</div>
-        <div className="text-lg font-semibold text-gray-800">
-          {role.numOfWorkers ?? 0}
+      <div className="flex items-center gap-4 justify-between md:justify-end border-t md:border-t-0 border-gray-100 pt-4 md:pt-0 mt-2 md:mt-0">
+        <div className="flex flex-col items-center justify-center bg-blue-50/50 px-4 py-2 rounded-xl border border-blue-100 min-w-[80px]">
+          <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">
+            {t("workers")}
+          </span>
+          <span className="text-xl font-bold text-gray-900">
+            {role.numOfWorkers ?? 0}
+          </span>
         </div>
-      </div>
 
-      {/* right: actions */}
-      <div className="flex items-center justify-end gap-3">
-        <button
-          onClick={() => onDelete(role.id)}
-          title="Delete role"
-          className="flex items-center gap-2 px-3 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-shadow shadow-sm"
-        >
-          <span className="text-sm font-medium">{t("delete")} </span>
-          <FaTrash />
-        </button>
-        <button
-          // onClick={() => onDelete(role.id)}
-          title="Edit role"
-          className="flex items-center gap-2 px-3 py-2 rounded-full bg-gray-500 text-white hover:bg-gray-600 transition-shadow shadow-sm"
-        >
-          <span className="text-sm font-medium">{t("edit")}</span> <FaEdit />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            title="Edit role"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white transition-colors duration-200"
+          >
+            <FaEdit size={16} />
+          </button>
+          
+          <button
+            onClick={() => onDelete(role.id)}
+            title="Delete role"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-200"
+          >
+            <FaTrash size={16} />
+          </button>
+        </div>
       </div>
     </div>
   );

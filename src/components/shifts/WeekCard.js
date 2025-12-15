@@ -14,8 +14,11 @@ import OptimalBuilderReport from "./OptimalBuilderReport";
 import { downloadWeekAssignmentsExcel } from "../../utils/weekDataExcelDownloader";
 import { LuFileSpreadsheet } from "react-icons/lu";
 import { IoIosLink } from "react-icons/io";
-import { MdOutlineModeEditOutline, MdSmartToy } from "react-icons/md";
+import { MdDelete, MdOutlineModeEditOutline, MdSmartToy } from "react-icons/md";
 import { BsCalendar2Week } from "react-icons/bs";
+import VisualizeWholeWeek from "./VisualizeWholeWeek";
+import { FaRegEye } from "react-icons/fa";
+
 
 const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
   const t = useTranslations("WeekCard");
@@ -24,8 +27,10 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
   const [encryptedBoss, setEncryptedBoss] = useState("");
   const [encryptedWeek, setEncryptedWeek] = useState("");
   const [editingManually, setEditingManually] = useState(false);
+  const [seeWholeWeek, setSeeWholeWeek] = useState(false);
   const [statsForm, setStatsForm] = useState(false);
   const [stats, setStats] = useState(null);
+  
 
   useEffect(() => {
     setLoading(true);
@@ -82,7 +87,8 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
           </div>
         </div>
 
-        <div className="flex flex-row items-center justify-center gap-3 mt-3">
+        <div className="flex flex-col items-center justify-center gap-3 mt-3">
+          <div className="flex flex-row items-center justify-center gap-3 mt-3">
           <button
             type="button"
             // Added w-full here
@@ -120,6 +126,21 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
             <h1 className="hidden md:block">{t("edit")}</h1>
           </button>
 
+
+          </div>
+          <div className="flex flex-row items-center justify-center gap-3 mt-3">
+
+          <button
+            type="button"
+            // Added w-full here
+            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-medium shadow hover:bg-blue-700 transition"
+            title="Edit Manually"
+            onClick={() => setSeeWholeWeek(!seeWholeWeek)}
+          >
+            <FaRegEye />
+            <h1 className="hidden md:block">{t("inspect")}</h1>
+          </button>
+
           <button
             type="button"
             // Added w-full here
@@ -145,9 +166,10 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
             title="Delete"
             onClick={handleDeleteWeek}
           >
-            <MdOutlineModeEditOutline />
+            <MdDelete />
             <h1 className="hidden md:block">{t("delete")}</h1>
           </button>
+          </div>
         </div>
         {loading && <Loader />}
 
@@ -155,6 +177,7 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
           <OptimalBuilderReport stats={stats} setStatsForm={setStatsForm} />
         )}
       </div>
+      {seeWholeWeek && <VisualizeWholeWeek week_id={week_id} onClose={() => setSeeWholeWeek(false)}/>}
       {editingManually && (
         <div className="border-t border-gray-100 pt-4">
           {loading ? (
