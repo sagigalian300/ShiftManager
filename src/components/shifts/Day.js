@@ -32,6 +32,7 @@ const Day = ({ id, date, dayName, workers, roles }) => {
             type={shift.type}
             workers={workers}
             roles={roles}
+            setShifts={setShifts}
           />
         ))}
       </div>

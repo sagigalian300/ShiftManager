@@ -17,8 +17,9 @@ import { IoIosLink } from "react-icons/io";
 import { MdDelete, MdOutlineModeEditOutline, MdSmartToy } from "react-icons/md";
 import { BsCalendar2Week } from "react-icons/bs";
 import VisualizeWholeWeek from "./VisualizeWholeWeek";
-import { FaRegEye } from "react-icons/fa";
-
+import { FaRegEye, FaLightbulb } from "react-icons/fa";
+import { getWorkersSuggestionsForWeek } from "../../services/workersAssignments";
+import WorkersSuggestionsDisplay from "../workerShiftAssignments/WorkersSuggestionsDisplay";
 
 const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
   const t = useTranslations("WeekCard");
@@ -30,7 +31,7 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
   const [seeWholeWeek, setSeeWholeWeek] = useState(false);
   const [statsForm, setStatsForm] = useState(false);
   const [stats, setStats] = useState(null);
-  
+  const [showWorkersSuggestions, setShowWorkersSuggestions] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -89,86 +90,94 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
 
         <div className="flex flex-col items-center justify-center gap-3 mt-3">
           <div className="flex flex-row items-center justify-center gap-3 mt-3">
-          <button
-            type="button"
-            // Added w-full here
-            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-green-600 text-white text-sm font-medium shadow-sm hover:bg-green-700 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-            title="Export to Excel"
-            onClick={() => {
-              getWeekDataForExcelDocument(week_id).then((data) => {
-                downloadWeekAssignmentsExcel(data.weekData);
-              });
-            }}
-          >
-            <LuFileSpreadsheet />
-            <h1 className="hidden md:block">{t("excel")}</h1>
-          </button>
+            <button
+              type="button"
+              // Added w-full here
+              className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-green-600 text-white text-sm font-medium shadow-sm hover:bg-green-700 hover:shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              title="Export to Excel"
+              onClick={() => {
+                getWeekDataForExcelDocument(week_id).then((data) => {
+                  downloadWeekAssignmentsExcel(data.weekData);
+                });
+              }}
+            >
+              <LuFileSpreadsheet />
+              <h1 className="hidden md:block">{t("excel")}</h1>
+            </button>
 
-          <a
-            href={assignUrl}
-            target="_blank"
-            rel="noreferrer"
-            // Added w-full and justify-center here
-            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition"
-          >
-            <IoIosLink />
-            <h1 className="hidden md:block">{t("link")}</h1>
-          </a>
+            <a
+              href={assignUrl}
+              target="_blank"
+              rel="noreferrer"
+              // Added w-full and justify-center here
+              className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition"
+            >
+              <IoIosLink />
+              <h1 className="hidden md:block">{t("link")}</h1>
+            </a>
 
-          <button
-            type="button"
-            // Added w-full here
-            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gray-600 text-white text-sm font-medium shadow hover:bg-gray-700 transition"
-            title="Edit Manually"
-            onClick={() => setEditingManually(!editingManually)}
-          >
-            <MdOutlineModeEditOutline />
-            <h1 className="hidden md:block">{t("edit")}</h1>
-          </button>
-
-
+            <button
+              type="button"
+              // Added w-full here
+              className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gray-600 text-white text-sm font-medium shadow hover:bg-gray-700 transition"
+              title="Edit Manually"
+              onClick={() => setEditingManually(!editingManually)}
+            >
+              <MdOutlineModeEditOutline />
+              <h1 className="hidden md:block">{t("edit")}</h1>
+            </button>
           </div>
           <div className="flex flex-row items-center justify-center gap-3 mt-3">
+            <button
+              type="button"
+              // Added w-full here
+              className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-medium shadow hover:bg-blue-700 transition"
+              title="See whole week visualization"
+              onClick={() => setSeeWholeWeek(!seeWholeWeek)}
+            >
+              <FaRegEye />
+              <h1 className="hidden md:block">{t("inspect")}</h1>
+            </button>
 
-          <button
-            type="button"
-            // Added w-full here
-            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-medium shadow hover:bg-blue-700 transition"
-            title="Edit Manually"
-            onClick={() => setSeeWholeWeek(!seeWholeWeek)}
-          >
-            <FaRegEye />
-            <h1 className="hidden md:block">{t("inspect")}</h1>
-          </button>
+            <button
+              type="button"
+              // Added w-full here
+              className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-yellow-600 text-white text-sm font-medium shadow hover:bg-yellow-700 transition"
+              title="Watch worker suggestions"
+              onClick={() => setShowWorkersSuggestions((curr) => !curr)}
+            >
+              <FaLightbulb />
+              <h1 className="hidden md:block">{t("suggestions")}</h1>
+            </button>
 
-          <button
-            type="button"
-            // Added w-full here
-            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-rose-500 to-orange-400 text-white text-sm font-medium shadow hover:from-rose-600 hover:to-orange-500 transition"
-            title="Smart Creation"
-            onClick={() => {
-              setStatsForm(true);
-              setLoading(true);
-              computeOptimalAssignment(week_id).then((res) => {
-                setStats(res.details.stats);
-                setLoading(false);
-              });
-            }}
-          >
-            <MdSmartToy />
-            <h1 className="hidden md:block">{t("smartCreation")}</h1>
-          </button>
+            <button
+              type="button"
+              // Added w-full here
+              className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-rose-500 to-orange-400 text-white text-sm font-medium shadow hover:from-rose-600 hover:to-orange-500 transition"
+              title="Smart Creation"
+              onClick={() => {
+                setStatsForm(true);
+                setLoading(true);
+                computeOptimalAssignment(week_id).then((res) => {
+                  setStats(res.details.stats);
+                  setLoading(false);
+                });
+              }}
+            >
+              <MdSmartToy />
+              <h1 className="hidden md:block">{t("smartCreation")}</h1>
+            </button>
 
-          <button
-            type="button"
-            // Added w-full here
-            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-red-600 text-white text-sm font-medium shadow hover:bg-red-700 transition"
-            title="Delete"
-            onClick={handleDeleteWeek}
-          >
-            <MdDelete />
-            <h1 className="hidden md:block">{t("delete")}</h1>
-          </button>
+            <button
+              type="button"
+              // Added w-full here
+              className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-red-600 text-white text-sm font-medium shadow hover:bg-red-700 transition"
+              title="Delete"
+              onClick={handleDeleteWeek}
+            >
+              <MdDelete />
+              <h1 className="hidden md:block">{t("delete")}</h1>
+            </button>
           </div>
         </div>
         {loading && <Loader />}
@@ -176,8 +185,16 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
         {statsForm && (
           <OptimalBuilderReport stats={stats} setStatsForm={setStatsForm} />
         )}
+        {showWorkersSuggestions && (
+          <WorkersSuggestionsDisplay weekId={week_id} setShowWorkersSuggestions={setShowWorkersSuggestions} />
+        )}
       </div>
-      {seeWholeWeek && <VisualizeWholeWeek week_id={week_id} onClose={() => setSeeWholeWeek(false)}/>}
+      {seeWholeWeek && (
+        <VisualizeWholeWeek
+          week_id={week_id}
+          onClose={() => setSeeWholeWeek(false)}
+        />
+      )}
       {editingManually && (
         <div className="border-t border-gray-100 pt-4">
           {loading ? (

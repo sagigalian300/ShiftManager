@@ -161,3 +161,19 @@ export async function getWeekDataForExcelDocument(week_id) {
     );
   }
 }
+
+export async function deleteShift(shift_id) {
+  try {
+    const response = await api.delete(`shift/deleteShift/${shift_id}`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Deleting shift failed:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error(
+      error.response?.data?.message ||
+        "Deleting shift failed due to an unknown error."
+    );
+  }
+}

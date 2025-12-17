@@ -3,11 +3,13 @@ import { useTranslations } from "use-intl";
 import ShiftRole from "./ShiftRole";
 import {
   addShiftAssignments,
+  deleteShift,
   getShiftsAssignments,
 } from "../../services/shifts";
 import Loader from "../UI/Loader";
+import { MdDelete, MdOutlineModeEditOutline } from "react-icons/md";
 
-const ShiftCard = ({ id, type, workers, roles }) => {
+const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
   const t = useTranslations("ShiftCard");
   const [open, setOpen] = useState(false);
   const [rolesWorkers, setRolesWorkers] = useState(
@@ -44,7 +46,7 @@ const ShiftCard = ({ id, type, workers, roles }) => {
   return (
     <div>
       {/* Shift header */}
-      <div className="flex flex-row items-center mb-2 border-b border-gray-300 pb-2">
+      <div className="flex flex-col items-start mb-2 border-b border-gray-300 pb-2">
         <h1
           className={`text-xl font-semibold m-2 ${
             type === 0 ? "text-blue-600" : "text-purple-600"
@@ -52,15 +54,34 @@ const ShiftCard = ({ id, type, workers, roles }) => {
         >
           {type === 0 ? t("morning") : t("evening")}
         </h1>
-
-        <button
-          onClick={() => {
-            setOpen(!open);
-          }}
-          className="w-full sm:w-auto m-2 px-6 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
-        >
-          {open ? t("close") : t("open")}
-        </button>
+        <div className="flex flex-row gap-2 items-center justify-between">
+          <button
+            onClick={() => setOpen(!open)}
+            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-purple-600 text-white text-sm font-medium shadow hover:bg-purple-700 transition"
+          >
+            <MdOutlineModeEditOutline className="text-lg" />
+            <span className="hidden md:inline mr-2">
+              {open ? t("close") : t("open")}
+            </span>
+          </button>
+          <button
+            onClick={() => {
+              setShifts((prev) => prev.filter((shift) => shift.id !== id));
+              deleteShift(id)
+                .then((res) => {
+                  setLoading(true);
+                })
+                .catch((err) => {
+                  console.log(err);
+                  alert("Error deleting shift");
+                });
+            }}
+            className="w-fit inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-red-600 text-white text-sm font-medium shadow hover:bg-red-700 transition"
+          >
+            <MdDelete className="text-lg" />
+            <span className="hidden md:inline mr-2">{t("delete")}</span>
+          </button>
+        </div>
       </div>
 
       {/* Closed state: empty */}

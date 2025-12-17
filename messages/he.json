@@ -23,7 +23,8 @@
     "excel": "אקסל",
     "delete": "מחק",
     "smartCreation": "חכם",
-    "inspect": "צפה"
+    "inspect": "צפה",
+    "suggestions": "הצעות"
   },
   "Day": {
     "sunday": "ראשון",
@@ -41,7 +42,8 @@
     "close": "סגור",
     "morningShift": "משמרת בוקר",
     "eveningShift": "משמרת ערב",
-    "save": "שמור"
+    "save": "שמור",
+    "delete": "מחק"
   },
   "WorkersPicker": {
     "workers": "עובדים",
@@ -167,6 +169,24 @@
     "other": "אחר",
     "noShifts": "---",
     "emptyAssignments": "ריק",
+    "sunday": "ראשון",
+    "monday": "שני",
+    "tuesday": "שלישי",
+    "wednesday": "רביעי",
+    "thursday": "חמישי",
+    "friday": "שישי",
+    "saturday": "שבת"
+  },
+  "WorkersSuggestionsDisplay": {
+    "title": "הצעות משמרות מעובדים",
+    "subtitle": "סקירת ההעדפות שנשלחו על ידי הצוות לשבוע זה",
+    "close": "סגור",
+    "loading": "טוען הצעות...",
+    "noSuggestions": "לא נמצאו הצעות לשבוע המבוקש",
+    "morning": "בוקר",
+    "evening": "ערב",
+    "shiftsCount": "משמרות",
+    "footerNote": "הנתונים מוצגים לפי דיווחי העובדים במערכת",
     "sunday": "ראשון",
     "monday": "שני",
     "tuesday": "שלישי",

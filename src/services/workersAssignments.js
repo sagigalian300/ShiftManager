@@ -21,3 +21,14 @@ export async function addWorkerSuggestedAssignment(suggestion) {
     console.log("Error adding worker suggested assignment");
   }
 }
+
+export async function getWorkersSuggestionsForWeek(weekId) {
+  try {
+    const response = await api.get(
+      `/workerAssignments/getWorkersSuggestionsForWeek/${weekId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching workers suggestions for week");
+  }
+}

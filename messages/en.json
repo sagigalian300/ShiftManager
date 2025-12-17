@@ -23,7 +23,8 @@
     "excel": "Excel",
     "delete": "Delete",
     "smartCreation": "Smart",
-    "inspect": "Inspect"
+    "inspect": "Inspect",
+    "suggestions": "Suggestions"
   },
   "Day": {
     "sunday": "Sunday",
@@ -41,7 +42,8 @@
     "close": "Close",
     "morningShift": "Morning Shift",
     "eveningShift": "Evening Shift",
-    "save": "Save"
+    "save": "Save",
+    "delete": "Delete"
   },
   "WorkersPicker": {
     "workers": "Workers",
@@ -167,6 +169,25 @@
     "other": "Other",
     "noShifts": "---",
     "emptyAssignments": "Empty",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  },
+
+  "WorkersSuggestionsDisplay": {
+    "title": "Worker Shift Suggestions",
+    "subtitle": "Reviewing preferences sent by the team for this week",
+    "close": "Close",
+    "loading": "Loading suggestions...",
+    "noSuggestions": "No suggestions found for the requested week",
+    "morning": "Morning",
+    "evening": "Evening",
+    "shiftsCount": "shifts",
+    "footerNote": "Data is displayed based on worker reports in the system",
     "sunday": "Sunday",
     "monday": "Monday",
     "tuesday": "Tuesday",
