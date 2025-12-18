@@ -19,3 +19,13 @@ export async function getAllWorkersForBossId(bossId) {
     throw error;
   }
 }
+
+export async function deleteBossById(bossId) {
+  try {
+    const response = await api.delete(`/admin/deleteBoss/${bossId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting boss with ID ${bossId}:`, error);
+    throw error;
+  }
+}

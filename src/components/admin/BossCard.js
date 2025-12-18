@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { getAllWorkersForBossId } from "../../services/admin";
+import { deleteBossById, getAllWorkersForBossId } from "../../services/admin";
 import Loader from "../UI/Loader";
 import WorkersTable from "./WorkersTable";
 
-const BossCard = ({ id, username, roles }) => {
+const BossCard = ({ id, username, roles, setBosses }) => {
   const [workers, setWorker] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showWorkers, setShowWorkers] = useState(false);
@@ -73,7 +73,26 @@ const BossCard = ({ id, username, roles }) => {
           <button className="bg-gray-100 text-gray-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-gray-200 transition-colors">
             Edit
           </button>
-          <button className="bg-red-50 text-red-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-red-100 transition-colors">
+          <button
+            className="bg-red-50 text-red-600 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-red-100 transition-colors"
+            onClick={() => {
+              setLoading(true);
+              deleteBossById(id)
+                .then((res) => {
+                  alert("Boss deleted successfully." + res.data);
+                })
+                .catch((error) => {
+                  alert("Failed to delete boss: " + error.message);
+                })
+                .finally(() => {
+                  setLoading(false);
+
+                  setBosses((prevBosses) =>
+                    prevBosses.filter((boss) => boss.id !== id)
+                  );
+                });
+            }}
+          >
             Delete
           </button>
         </div>

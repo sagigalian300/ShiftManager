@@ -105,6 +105,7 @@ const Page = () => {
                 id={boss.id}
                 username={boss.username}
                 roles={boss.roles}
+                setBosses={setBosses}
               />
             ))}
           </div>
