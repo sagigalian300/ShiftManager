@@ -6,7 +6,6 @@ import WorkerCard from "../../../components/workers/WorkerCard";
 import { addWorker, delWorker, getAllWorkers } from "../../../services/worker";
 import Loader from "../../../components/UI/Loader";
 import { getAllRoles } from "../../../services/role";
-import { getCookie } from "cookies-next";
 
 export default function Workers() {
   const t = useTranslations("Workers");
@@ -24,6 +23,7 @@ export default function Workers() {
     rank: "",
     roles: [],
     salary: "",
+    id: null,
   });
 
   useEffect(() => {
@@ -45,6 +45,7 @@ export default function Workers() {
       alert("Please select at least one role for the worker.");
       return;
     }
+    setLoading(true);
     addWorker(
       newWorker.first_name,
       newWorker.last_name,
@@ -54,20 +55,23 @@ export default function Workers() {
       newWorker.roles,
       newWorker.password,
       newWorker.rank
-    );
+    ).then((res) => {
+      console.log(res);
 
-    setWorkers([...workers, newWorker]);
-    setNewWorker({
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone: "",
-      roles: [],
-      salary: "",
-      password: "",
-      rank: 0,
+      setWorkers([...workers, { ...newWorker, id: res.newWorkerId }]);
+      setNewWorker({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        roles: [],
+        salary: "",
+        password: "",
+        rank: 0,
+      });
+      setShowForm(false);
+      setLoading(false);
     });
-    setShowForm(false);
   };
 
   const deleteWorker = (workerId) => {

@@ -21,6 +21,8 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
       updatedRoles,
     } = updatedWorker;
 
+    console.log("Updating worker id:", worker_id);
+
     // Find the worker in the local state
     const existingWorker = worker;
     // Compare changes

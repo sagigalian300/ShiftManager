@@ -24,7 +24,8 @@
     "delete": "Delete",
     "smartCreation": "Smart",
     "inspect": "Inspect",
-    "suggestions": "Suggestions"
+    "suggestions": "Suggestions",
+    "linkCopied": "Link copied to clipboard"
   },
   "Day": {
     "sunday": "Sunday",
@@ -79,6 +80,20 @@
     "roles": "Roles",
     "save": "Save"
   },
+  "EditRole": {
+    "title": "Edit Role",
+    "close": "Close",
+    "name": "Role Name",
+    "numOfWorkers": "Number of workers",
+    "description": "Description",
+    "tags": "Tags",
+    "removeTag": "Remove tag",
+    "tagPlaceholder": "Add a tag",
+    "addTag": "Add Tag",
+    "save": "Save",
+    "errorNoName": "Role needs a name",
+    "delete": "Delete"
+  },
   "AddWorker": {
     "firstName": "First Name",
     "lastName": "Last Name",
@@ -99,6 +114,20 @@
     "delete": "Delete",
     "workers": "Workers",
     "edit": "Edit"
+  },
+  "RoleForm": {
+    "title": "Add New Role",
+    "nameLabel": "Role Name",
+    "descriptionLabel": "Description",
+    "numLabel": "Number of Workers",
+    "namePlaceholder": "e.g., Shift Manager, Barista",
+    "descriptionPlaceholder": "Briefly describe the responsibilities of this role.",
+    "numPlaceholder": "Enter the number of workers needed for this role",
+    "cancel": "Cancel",
+    "save": "Save Role"
+  },
+  "RolesList": {
+    "empty": "No roles available. Click \"Add New Role\" to create one."
   },
   "workersShiftAssignments": {
     "hello": "Hello",

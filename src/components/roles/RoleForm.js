@@ -1,28 +1,31 @@
 // RoleForm.js
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useTranslations } from "use-intl";
 
 const RoleForm = ({ onSaveRole, onCancel }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const t = useTranslations("RoleForm");
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [numOfWorkers, setNumOfWorkers] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name.trim() === '') return; // Basic validation
+    if (name.trim() === "") return; // Basic validation
     
     onSaveRole({ name, description, numOfWorkers });
-    setName('');
-    setDescription('');
+    setName("");
+    setDescription("");
     setNumOfWorkers(0);
   };
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-lg border border-gray-100 mb-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Add New Role</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">{t("title")}</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="roleName" className="block text-sm font-medium text-gray-700 mb-1">
-            Role Name
+            {t("nameLabel")}
           </label>
           <input
             type="text"
@@ -31,12 +34,12 @@ const RoleForm = ({ onSaveRole, onCancel }) => {
             onChange={(e) => setName(e.target.value)}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-            placeholder="e.g., Shift Manager, Barista"
+            placeholder={t("namePlaceholder")}
           />
         </div>
         <div className="mb-4">
           <label htmlFor="roleDescription" className="block text-sm font-medium text-gray-700 mb-1">
-            Description
+            {t("descriptionLabel")}
           </label>
           <textarea
             id="roleDescription"
@@ -44,13 +47,13 @@ const RoleForm = ({ onSaveRole, onCancel }) => {
             onChange={(e) => setDescription(e.target.value)}
             rows="3"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-            placeholder="Briefly describe the responsibilities of this role."
+            placeholder={t("descriptionPlaceholder")}
           />
         </div>
 
         <div className="mb-6">
           <label htmlFor="numOfWorkers" className="block text-sm font-medium text-gray-700 mb-1">
-            Number of Workers
+            {t("numLabel")}
           </label>
           <input
             type="number"
@@ -58,7 +61,7 @@ const RoleForm = ({ onSaveRole, onCancel }) => {
             value={numOfWorkers}
             onChange={(e) => setNumOfWorkers(Number(e.target.value))}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-purple-500 focus:border-purple-500"
-            placeholder="Enter the number of workers needed for this role"
+            placeholder={t("numPlaceholder")}
             min="0"
           />
         </div>
@@ -69,13 +72,13 @@ const RoleForm = ({ onSaveRole, onCancel }) => {
             onClick={onCancel}
             className="px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors duration-200"
           >
-            Cancel
+            {t("cancel")}
           </button>
           <button
             type="submit"
             className="px-6 py-2 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 transition-colors duration-300"
           >
-            Save Role
+            {t("save")}
           </button>
         </div>
       </form>

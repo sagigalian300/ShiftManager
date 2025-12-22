@@ -24,7 +24,8 @@
     "delete": "מחק",
     "smartCreation": "חכם",
     "inspect": "צפה",
-    "suggestions": "הצעות"
+    "suggestions": "הצעות",
+    "linkCopied": "הקישור הועתק"
   },
   "Day": {
     "sunday": "ראשון",
@@ -79,6 +80,20 @@
     "roles": "תפקידים",
     "save": "שמור"
   },
+  "EditRole": {
+    "title": "ערוך תפקיד",
+    "close": "סגור",
+    "name": "שם תפקיד",
+    "numOfWorkers": "מספר עובדים",
+    "description": "תיאור",
+    "tags": "תגיות",
+    "removeTag": "הסר תגית",
+    "tagPlaceholder": "הוסף תגית",
+    "addTag": "הוסף תגית",
+    "save": "שמור",
+    "errorNoName": "לתפקיד חייב להיות שם",
+    "delete": "מחק"
+  },
   "AddWorker": {
     "firstName": "שם פרטי",
     "lastName": "שם משפחה",
@@ -99,6 +114,20 @@
     "delete": "מחק",
     "workers": "עובדים",
     "edit": "ערוך"
+  },
+  "RoleForm": {
+    "title": "הוסף תפקיד חדש",
+    "nameLabel": "שם תפקיד",
+    "descriptionLabel": "תיאור",
+    "numLabel": "מספר עובדים",
+    "namePlaceholder": "לדוגמה: מנהל משמרת, בריסטה",
+    "descriptionPlaceholder": "תאר בקצרה את האחריות של התפקיד",
+    "numPlaceholder": "הזן את מספר העובדים הנדרש לתפקיד",
+    "cancel": "בטל",
+    "save": "שמור תפקיד"
+  },
+  "RolesList": {
+    "empty": "אין תפקידים זמינים. לחץ \"הוסף תפקיד חדש\" כדי ליצור אחד."
   },
   "workersShiftAssignments": {
     "hello": "שלום",

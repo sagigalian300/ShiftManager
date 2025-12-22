@@ -2,7 +2,11 @@ import { api } from "./api";
 
 export async function addRole(name, desc, numOfWorkers) {
   try {
-    const response = await api.post("role/addRole", { name, desc, numOfWorkers });
+    const response = await api.post("role/addRole", {
+      name,
+      desc,
+      numOfWorkers,
+    });
 
     return response.data;
   } catch (error) {
@@ -46,6 +50,26 @@ export async function getAllRoles() {
     throw new Error(
       error.response?.data?.message ||
         "Fetching roles failed due to an unknown error."
+    );
+  }
+}
+
+export async function updateRole(roleId, name, desc, numOfWorkers) {
+  try {
+    const response = await api.put(`role/updateRole/${roleId}`, {
+      name,
+      desc,
+      numOfWorkers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "updating role failed:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error(
+      error.response?.data?.message ||
+        "Updating role failed due to an unknown error."
     );
   }
 }

@@ -1,13 +1,48 @@
-import React from "react";
 import { useTranslations } from "use-intl";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import { useState } from "react";
+import EditRole from "./EditRole";
+import { updateRole } from "../../services/role";
 
-const RoleCard = ({ role, onDelete }) => {
+const RoleCard = ({ role, onDelete, setRoles }) => {
   const t = useTranslations("RoleCard");
+  const [editing, setEditing] = useState(false);
+
+  const handleUpdateRole = (updatedRole) => {
+    updateRole(
+      updatedRole.role_id,
+      updatedRole.name,
+      updatedRole.desc,
+      updatedRole.numOfWorkers
+    )
+      .then((res) => {
+        setRoles((prevRoles) =>
+          prevRoles.map((r) =>
+            r.id === updatedRole.role_id
+              ? {
+                  ...r,
+                  name: updatedRole.name,
+                  desc: updatedRole.desc,
+                  numOfWorkers: updatedRole.numOfWorkers,
+                }
+              : r
+          )
+        );
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   return (
     <div className="group bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col md:flex-row gap-5 md:items-center justify-between">
-      
+      {editing && (
+        <EditRole
+          role={role}
+          onSave={handleUpdateRole}
+          setEditing={setEditing}
+        />
+      )}
       <div className="flex flex-col gap-2 flex-1 min-w-0">
         <div className="flex flex-col">
           <h3 className="text-xl font-bold text-gray-900 truncate tracking-tight">
@@ -52,18 +87,24 @@ const RoleCard = ({ role, onDelete }) => {
 
         <div className="flex items-center gap-2">
           <button
-            title="Edit role"
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white transition-colors duration-200"
+            onClick={() => setEditing(true)}
+            className="flex items-center space-x-2 px-4 py-1.5 text-sm rounded-full 
+               bg-purple-600 text-white 
+               hover:bg-purple-700 transition-all font-medium shadow-sm"
           >
-            <FaEdit size={16} />
+            <FaEdit size={14} />
+            <span>{t("edit")}</span>
           </button>
-          
+
           <button
             onClick={() => onDelete(role.id)}
             title="Delete role"
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-200"
+            className="flex items-center space-x-2 px-4 py-1.5 text-sm rounded-full 
+               bg-red-500 text-white 
+               hover:bg-red-600 transition-all font-medium shadow-sm"
           >
-            <FaTrash size={16} />
+            <FaTrash size={14} />
+            <span>{t("delete")}</span>
           </button>
         </div>
       </div>
