@@ -9,6 +9,7 @@ import {
 import Loader from "../UI/Loader";
 import { MdDelete, MdOutlineModeEditOutline } from "react-icons/md";
 import ShiftWorkersSuggestions from "./ShiftWorkersSuggestions";
+import { Sun, Moon } from "lucide-react";
 
 const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
   const t = useTranslations("ShiftCard");
@@ -19,7 +20,6 @@ const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
   const [unSelectedWorkers, setUnSelectedWorkers] = useState(workers);
   const [shiftAssignments, setShiftAssignments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [seeWorkerSuggestions, setSeeWorkerSuggestions] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -54,8 +54,10 @@ const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
             type === 0 ? "text-blue-600" : "text-purple-600"
           }`}
         >
+          {type === 0 ? <Sun className="inline ml-2" /> : <Moon className="inline ml-2" />}
           {type === 0 ? t("morning") : t("evening")}
         </h1>
+    
         <div className="flex flex-row gap-2 items-center justify-between">
           <button
             onClick={() => setOpen(!open)}
@@ -93,14 +95,8 @@ const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
           <div className="bg-white w-full max-w-6xl rounded-2xl shadow-lg p-6 mx-4 overflow-y-auto max-h-[80vh]">
             {/* Worker Suggestions for that shift */}
 
-            {seeWorkerSuggestions && (
-              <ShiftWorkersSuggestions
-                shift_id={id}
-                setSeeWorkerSuggestions={setSeeWorkerSuggestions}
-              />
-            )}
             {/* Modal header */}
-            <div className="flex justify-between items-start   mb-6">
+            <div className="flex justify-between items-start mb-6">
               <h2 className="text-2xl font-semibold">
                 {type === 0 ? t("morningShift") : t("eveningShift")}
               </h2>
@@ -115,16 +111,9 @@ const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
                 >
                   {t("close")}
                 </button>
-                {!seeWorkerSuggestions && (
-                  <button
-                    onClick={() => setSeeWorkerSuggestions(true)}
-                    className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
-                  >
-                    {t("showSuggestions")}
-                  </button>
-                )}
               </div>
             </div>
+            <ShiftWorkersSuggestions shift_id={id} />
             {loading && <Loader />}
             {/* Roles grid */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
