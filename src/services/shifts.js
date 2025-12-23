@@ -177,3 +177,21 @@ export async function deleteShift(shift_id) {
     );
   }
 }
+
+export async function getShiftWorkersSuggestions(shift_id) {
+  try {
+    const response = await api.get(
+      `shift/getShiftWorkersSuggestions/${shift_id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Fetching shift workers suggestions failed:",
+      error.response ? error.response.data : error.message
+    );
+    throw new Error(
+      error.response?.data?.message ||
+        "Fetching shift workers suggestions failed due to an unknown error."
+    );
+  }
+}

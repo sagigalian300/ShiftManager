@@ -44,7 +44,8 @@
     "morningShift": "משמרת בוקר",
     "eveningShift": "משמרת ערב",
     "save": "שמור",
-    "delete": "מחק"
+    "delete": "מחק",
+    "showSuggestions": "הצג הצעות עובדים"
   },
   "WorkersPicker": {
     "workers": "עובדים",
@@ -128,6 +129,11 @@
   },
   "RolesList": {
     "empty": "אין תפקידים זמינים. לחץ \"הוסף תפקיד חדש\" כדי ליצור אחד."
+  },
+  "ShiftWorkersSuggestions": {
+    "title": "עובדים שנתנו משמרת זו",
+    "empty": "אף עובד לא הגיש למשמרת זו",
+    "close": "הסתר"
   },
   "workersShiftAssignments": {
     "hello": "שלום",

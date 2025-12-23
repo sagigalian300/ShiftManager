@@ -68,6 +68,7 @@ export default function Workers() {
         salary: "",
         password: "",
         rank: 0,
+        id: null,
       });
       setShowForm(false);
       setLoading(false);

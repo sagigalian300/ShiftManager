@@ -44,7 +44,8 @@
     "morningShift": "Morning Shift",
     "eveningShift": "Evening Shift",
     "save": "Save",
-    "delete": "Delete"
+    "delete": "Delete",
+    "showSuggestions": "Show workers suggestions"
   },
   "WorkersPicker": {
     "workers": "Workers",
@@ -128,6 +129,11 @@
   },
   "RolesList": {
     "empty": "No roles available. Click \"Add New Role\" to create one."
+  },
+  "ShiftWorkersSuggestions": {
+    "title": "Suggested Workers",
+    "empty": "No suggestions.",
+    "close": "Close"
   },
   "workersShiftAssignments": {
     "hello": "Hello",

@@ -8,6 +8,7 @@ import {
 } from "../../services/shifts";
 import Loader from "../UI/Loader";
 import { MdDelete, MdOutlineModeEditOutline } from "react-icons/md";
+import ShiftWorkersSuggestions from "./ShiftWorkersSuggestions";
 
 const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
   const t = useTranslations("ShiftCard");
@@ -18,6 +19,7 @@ const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
   const [unSelectedWorkers, setUnSelectedWorkers] = useState(workers);
   const [shiftAssignments, setShiftAssignments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [seeWorkerSuggestions, setSeeWorkerSuggestions] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -89,21 +91,39 @@ const ShiftCard = ({ id, type, workers, roles, setShifts }) => {
         // Full-screen modal overlay
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-start pt-20">
           <div className="bg-white w-full max-w-6xl rounded-2xl shadow-lg p-6 mx-4 overflow-y-auto max-h-[80vh]">
+            {/* Worker Suggestions for that shift */}
+
+            {seeWorkerSuggestions && (
+              <ShiftWorkersSuggestions
+                shift_id={id}
+                setSeeWorkerSuggestions={setSeeWorkerSuggestions}
+              />
+            )}
             {/* Modal header */}
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-start   mb-6">
               <h2 className="text-2xl font-semibold">
                 {type === 0 ? t("morningShift") : t("eveningShift")}
               </h2>
-              <button
-                onClick={() => {
-                  setUnSelectedWorkers(workers);
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => {
+                    setUnSelectedWorkers(workers);
 
-                  setOpen(false);
-                }}
-                className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
-              >
-                {t("close")}
-              </button>
+                    setOpen(false);
+                  }}
+                  className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+                >
+                  {t("close")}
+                </button>
+                {!seeWorkerSuggestions && (
+                  <button
+                    onClick={() => setSeeWorkerSuggestions(true)}
+                    className="px-4 py-2 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition-all font-medium"
+                  >
+                    {t("showSuggestions")}
+                  </button>
+                )}
+              </div>
             </div>
             {loading && <Loader />}
             {/* Roles grid */}
