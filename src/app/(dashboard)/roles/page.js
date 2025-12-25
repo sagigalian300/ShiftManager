@@ -44,6 +44,7 @@ const Roles = () => {
 
   // Function to delete an existing role
   const handleDeleteRole = async (roleId) => {
+    if (!window.confirm(t("deleteConfirmation"))) return;
     setLoading(true);
     deleteRole(roleId)
       .then((res) => {

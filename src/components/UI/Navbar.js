@@ -82,7 +82,7 @@ const Navbar = () => {
                        hover:bg-white/20 hover:translate-x-1 active:scale-95 font-medium"
             onClick={() => {
               logoutUser().then((res) => {
-                console.log(res);
+                router.push("/login");
               });
             }}
           >

@@ -25,7 +25,8 @@
     "smartCreation": "חכם",
     "inspect": "צפה",
     "suggestions": "הצעות",
-    "linkCopied": "הקישור הועתק"
+    "linkCopied": "הקישור הועתק",
+    "deleteConfirmation": "האם אתה בטוח שברצונך למחוק שבוע זה? פעולה זו אינה ניתנת לביטול."
   },
   "Day": {
     "sunday": "ראשון",
@@ -65,7 +66,8 @@
   },
   "WorkerCard": {
     "edit": "ערוך",
-    "delete": "מחק"
+    "delete": "מחק",
+    "deleteConfirmation": "האם אתה בטוח שברצונך למחוק עובד זה? פעולה זו אינה ניתנת לביטול."
   },
   "EditWorker": {
     "title": "ערוך עובד",
@@ -109,7 +111,8 @@
   },
   "Roles": {
     "title": "תפקידים",
-    "add": "הוסף"
+    "add": "הוסף",
+    "deleteConfirmation": "האם אתה בטוח שברצונך למחוק תפקיד זה? פעולה זו אינה ניתנת לביטול."
   },
   "RoleCard": {
     "delete": "מחק",

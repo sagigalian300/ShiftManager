@@ -142,6 +142,7 @@ const WorkerCard = ({ index, worker, setWorkers, roles, deleteWorker }) => {
         {/* Delete Button: Red text/outline for destructive action */}
         <button
           onClick={() => {
+            if(!window.confirm(t("deleteConfirmation"))) return;
             deleteWorker(worker.id);
           }}
           className="flex items-center space-x-2 px-4 py-1.5 text-sm rounded-full 

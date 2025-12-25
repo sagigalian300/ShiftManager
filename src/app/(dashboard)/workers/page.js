@@ -76,14 +76,12 @@ export default function Workers() {
   };
 
   const deleteWorker = (workerId) => {
-    // delete localy
-    setWorkers((prev) => prev.filter((worker) => worker.id != workerId));
-
     // delete from DB
     setLoading(true);
     delWorker(workerId)
       .then((res) => {
-        console.log(res);
+        // delete localy
+        setWorkers((prev) => prev.filter((worker) => worker.id != workerId));
       })
       .catch((err) => {
         console.log(err);

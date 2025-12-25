@@ -61,6 +61,8 @@ const WeekCard = ({ workers, roles, week_id, setWeeks }) => {
   );
 
   const handleDeleteWeek = () => {
+    if (!confirm(t("deleteConfirmation"))) return;
+
     setLoading(true);
     deleteWeek(week_id).then((res) => {
       console.log("Week deleted:", res);
